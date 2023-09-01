@@ -11,6 +11,7 @@ MYSQL_HOST = "localhost"
 MYSQL_PASSWORD = "password"
 MYSQL_USER = "root"
 MYSQL_DATABASE = "taipei_travel"
+MYSQL_POOL_SIZE=10
 
 
 #sql filter string

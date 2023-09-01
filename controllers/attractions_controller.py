@@ -10,25 +10,27 @@ def get_attractions() -> object:
     try:
         page_parameter = request.args.get("page")
         keyword_parameter = request.args.get("keyword")
-        print(page_parameter
-              ,keyword_parameter)
 
     except:
-        return handle_error({"code": 400, "message": "Invalid query string"}), 400
+        return jsonify({"error": True, "message": "Invalid query string"}), 400
     
     ##get data 
     try:
         res_data =  attractions_model.get_attractions(keyword_parameter, page_parameter)
-        return jsonify(res_data),200
+        return jsonify({"nextPage": int(page_parameter)+1, "data":res_data}),200
     except:
-        return handle_error({"code": 400, "message": "Server error"})
+        return jsonify({"error": True, "message": "Server error"})
     
 
-
-
-
-
-    return "get_attractions",200
-
 def get_attraction_by_id(attractionId) -> object:
-    return "get_attraction_by_id",200
+    try:
+        attractionId = int(attractionId)
+        res_data = attractions_model.get_attractions_by_id(attractionId)
+        if res_data==None:
+            return jsonify({"error":True, "message":"Not attractoin data"}), 400
+        return jsonify(res_data),200
+
+    except:
+        return jsonify({"error": True, "message": "Invalid query string"}), 400
+
+
