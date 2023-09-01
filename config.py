@@ -15,4 +15,4 @@ MYSQL_POOL_SIZE=10
 
 
 #sql filter string
-SQL_FILTER_STRING = "-","and","exec","insert","select","delete","updat","count","*","chr","mid","master","truncate","char","declare",";","or","-","+","="
+SQL_FILTER_STRING = "-","and","exec","insert","select","delete","update","count","*","chr","mid","master","truncate","char","declare",";","or","-","+","="

@@ -19,11 +19,12 @@ def filter_query_string(query_string_arr)->bool:
     sql_filter_arr = config.SQL_FILTER_STRING
 
     for item in query_string_arr:
-        for spec in sql_filter_arr:
+        for spec in sql_filter_arr: 
             if item == None: continue
-            if item in spec:
-                return False
+            if item.find(spec)!=-1:
+                return False 
     return True
+
 
     
 
