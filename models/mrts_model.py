@@ -21,7 +21,7 @@ def filter_query_string(query_string_arr)->bool:
     for item in query_string_arr:
         for spec in sql_filter_arr: 
             if item == None: continue
-            if item.find(spec)!=-1:
+            if item.upper().find(spec.upper())!=-1:
                 return False 
     return True
 
