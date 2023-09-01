@@ -10,7 +10,8 @@ app.json.ensure_ascii = False
 
 # Register blueprints
 #/api/attractions
-app.register_blueprint(attractions_bp.blueprints)
+app.register_blueprint(attractions_bp.blueprints_v1)
+app.register_blueprint(attractions_bp.blueprints_v2)
 #/api/mrts
 app.register_blueprint(mrts_bp.blueprints)
 
