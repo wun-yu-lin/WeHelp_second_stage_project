@@ -1,5 +1,7 @@
 import mysql.connector
-import attraction_model_config as config
+import sys
+sys.path.insert(1, './')
+import config
 
 
 db_fig ={
@@ -99,4 +101,78 @@ def get_all_category_data_from_taipei_travel():
             mysql_connection.rollback()
         cursor.close()
         mysql_connection.close()
-        
+
+def insert_into_attraction(attraction_object):
+
+    mysql_connection = get_mysql_connection_from_pool(mysql_connection_pool)
+    cursor = mysql_connection.cursor(dictionary=True)
+    mysql_str = "INSERT INTO attraction(address, category_id, description, lat, lng, mrt_id, name, transport, id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    try:
+        cursor.execute(mysql_str, 
+                       (attraction_object["address"],
+                        attraction_object["category_id"],
+                        attraction_object["description"],
+                        attraction_object["lat"],
+                        attraction_object["lng"],
+                        attraction_object["mrt_id"],
+                        attraction_object["name"],
+                        attraction_object["transport"],
+                        attraction_object["attraction_id"])
+                       )
+        mysql_connection.commit()
+        print("insert attraction data success!")
+    except Exception as err:
+        print("error in insert_into_attraction")
+        print(err)
+    finally:
+        if mysql_connection.in_transaction:
+            mysql_connection.rollback()
+        cursor.close()
+        mysql_connection.close()
+
+def insert_attraction_info(attraction_object):
+    mysql_connection = get_mysql_connection_from_pool(mysql_connection_pool)
+    cursor = mysql_connection.cursor(dictionary=True)
+    mysql_str = "INSERT INTO attraction_info(attraction_id, av_begin, av_end, idpt, memo_time, poi, rate, ref_wp) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+
+    try:
+        cursor.execute(mysql_str, 
+                       (attraction_object["attraction_id"],
+                        attraction_object["av_begin"],
+                        attraction_object["av_end"],
+                        attraction_object["idpt"],
+                        attraction_object["memo_time"],
+                        attraction_object["poi"],
+                        attraction_object["rate"],
+                        attraction_object["ref_wp"])
+                       )
+        mysql_connection.commit()
+        print("insert attraction info success!")
+    except Exception as err:
+        print("error in insert_attraction_info")
+        print(err)
+
+    finally:
+        if mysql_connection.in_transaction:
+            mysql_connection.rollback()
+        cursor.close()
+        mysql_connection.close()
+
+def insert_image(attraction_id, src):
+    mysql_connection = get_mysql_connection_from_pool(mysql_connection_pool)
+    cursor = mysql_connection.cursor(dictionary=True)
+    mysql_str = "INSERT INTO image(attraction_id, src) VALUES (%s, %s)"
+    try:
+        cursor.execute(mysql_str, 
+                       (attraction_id,
+                        src)
+                       )
+        mysql_connection.commit()
+        print("insert into image success!")
+    except Exception as err:
+        print(err)
+    finally:
+        if mysql_connection.in_transaction:
+            mysql_connection.rollback()
+        cursor.close()
+        mysql_connection.close()    

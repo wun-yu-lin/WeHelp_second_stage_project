@@ -1,10 +1,7 @@
-from flask import json, make_response
+from flask import make_response
 from werkzeug.exceptions import HTTPException
-from app import app
-
 
 ## Error handling
-@app.errorhandler(HTTPException)
 def handle_error(e):
     #error handling
     response_arg ={
@@ -12,11 +9,11 @@ def handle_error(e):
             "content-Type": "application/json"
         },
         "data": {
-            "code": e.code,
-            "description": e.description,
-            "error": e.error
+            "code": e["code"],
+            "message": e["description"],
+            "error": True
         }
     }
     #error handling
-    response = make_response(response_arg, e.code)
+    response = make_response(response_arg, e["code"])
     return response

@@ -1,10 +1,12 @@
 from flask import *
 import routes.attractions_bp as attractions_bp
 import routes.mrts_bp as mrts_bp
+from werkzeug.exceptions import HTTPException
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 app.config.from_object("config")
+app.json.ensure_ascii = False
 
 # Register blueprints
 #/api/attractions
@@ -27,4 +29,7 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
-app.run(host="127.0.0.1", port=3000)
+
+
+if __name__=="__main__":
+	app.run(host="127.0.0.1", port=3000)

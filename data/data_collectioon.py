@@ -23,6 +23,7 @@ def get_mrt_set(arrtactions_collection)->set:
         mrt_set.add(attraction["MRT"])
     return mrt_set
 
+
 def get_category_set(arrtactions_collection)->set:
     category_set = set()
     for attraction in arrtactions_collection:
@@ -32,6 +33,9 @@ def get_category_set(arrtactions_collection)->set:
 def split_file_scr_from_string(str)->[str]:
     resutls = []
     for item in str.split("https:"):
+        test_str = item.upper()
+        if test_str.find(".JPG")== -1 and test_str.find(".PNG")== -1:
+            continue
         resutls.append("https:" + item)
     return resutls
 def inset_all_mrt_data(mrt_set):
@@ -60,7 +64,8 @@ def get_all_category_data():
         category_dict[item["category"]] = item["category_id"]
     return category_dict
 
-
+##inset_all_mrt_data(get_mrt_set(taipei_attractions_collection))
+##insert_all_category_data(get_category_set(taipei_attractions_collection))
 
 ##get data dic
 category_dict = get_all_category_data()
@@ -70,6 +75,46 @@ mrt_dict = get_all_mrt_data()
 
 #plan insert data
 def insert_all_attraction_data(attractions_collection):
+    mrt_dict = get_all_mrt_data()
+    category_dict = get_all_category_data()
     for attraction in attractions_collection:
-        print(attraction)
+        try:
+            attraction_object = {
+                "attraction_id":attraction["_id"],
+                "rate":attraction["rate"],
+                "transport":attraction["direction"],
+                "name":attraction["name"],
+                "av_end":attraction["avEnd"],
+                "av_begin":attraction["avBegin"],
+                "address":attraction["address"],
+                "description":attraction["description"],
+                "mrt_id":mrt_dict[attraction["MRT"]],
+                "category_id":category_dict[attraction["CAT"]],
+                "date":attraction["date"],
+                "serial_no":attraction["SERIAL_NO"],
+                "memo_time":attraction["MEMO_TIME"],
+                "poi": attraction["POI"],
+                "file": split_file_scr_from_string(attraction["file"]),
+                'idpt': attraction["idpt"],
+                "lat": attraction["latitude"],
+                "lng": attraction["longitude"],
+                "ref_wp": attraction["REF_WP"]
+            }
+        except Exception as err:
+            print(err)
+            continue   
+        attraction_model.insert_into_attraction(attraction_object)
+        attraction_model.insert_attraction_info(attraction_object)
+        for item in attraction_object["file"]:
+            attraction_model.insert_image(
+                attraction_id=attraction_object["attraction_id"],
+                src=item
+                )
 #insert_all_attraction_data(taipei_attractions_collection)
+
+if __name__ == '__main__':
+    
+    inset_all_mrt_data(get_mrt_set(taipei_attractions_collection))
+    insert_all_category_data(get_category_set(taipei_attractions_collection))
+    insert_all_attraction_data(taipei_attractions_collection)
+    

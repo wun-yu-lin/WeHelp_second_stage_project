@@ -11,3 +11,7 @@ MYSQL_HOST = "localhost"
 MYSQL_PASSWORD = "password"
 MYSQL_USER = "root"
 MYSQL_DATABASE = "taipei_travel"
+
+
+#sql filter string
+SQL_FILTER_STRING = "-","and","exec","insert","select","delete","updat","count","*","chr","mid","master","truncate","char","declare",";","or","-","+","="
