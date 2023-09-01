@@ -48,7 +48,7 @@ def get_attractions(keyword=None, page=1):
     
     page = int(page)
     page_number =12
-    data_start = (page-1)*12
+    data_start = page*12
 
     ##filter error query string
     if filter_query_string([keyword])==False: return errorhandling.handle_error({"code": 400, "message": "Invalid query string"}), 400
