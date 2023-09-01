@@ -10,7 +10,7 @@ def handle_error(e):
         },
         "data": {
             "code": e["code"],
-            "message": e["description"],
+            "message": e["message"],
             "error": True
         }
     }

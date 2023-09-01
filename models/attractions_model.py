@@ -53,11 +53,19 @@ def get_attractions(keyword=None, page=1):
     if filter_query_string([keyword])==False: return errorhandling.handle_error({"code": 400, "message": "Invalid query string"}), 400
 
     ##non keyword search
+
     if keyword==None or keyword=="":
         mysql_str = "SELECT a.id, a.name, cat.category, a.description, a.address, a.transport, m.mrt, a.lat, a.lng, GROUP_CONCAT(DISTINCT img.src SEPARATOR ',') as images FROM attraction a LEFT JOIN attraction_info a_info on a.id = a_info.attraction_id LEFT JOIN mrt m on a.mrt_id = m.mrt_id LEFT JOIN category cat on a.category_id = cat.category_id LEFT JOIN image img on a.id = img.attraction_id GROUP BY a.id LIMIT %s,%s"
-
-    try:
         cursor.execute(mysql_str, (data_start,page_number))
+    else:
+        mysql_str = "SELECT a.id, a.name, cat.category, a.description, a.address, a.transport, m.mrt, a.lat, a.lng, GROUP_CONCAT(DISTINCT img.src SEPARATOR ',') as images FROM attraction a LEFT JOIN attraction_info a_info on a.id = a_info.attraction_id LEFT JOIN mrt m on a.mrt_id = m.mrt_id LEFT JOIN category cat on a.category_id = cat.category_id LEFT JOIN image img on a.id = img.attraction_id WHERE (a.name LIKE %s or m.mrt LIKE %s ) GROUP BY a.id LIMIT %s,%s"
+        query_str_partil = "%"+keyword+"%"
+        query_str_compelete = keyword
+
+ 
+        cursor.execute(mysql_str, (query_str_partil, query_str_compelete, data_start,page_number))
+    try:
+        
         results = cursor.fetchall()
         print("get attractions by keyword success!")
 

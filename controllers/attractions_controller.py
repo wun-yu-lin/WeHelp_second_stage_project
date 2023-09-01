@@ -10,7 +10,8 @@ def get_attractions() -> object:
     try:
         page_parameter = request.args.get("page")
         keyword_parameter = request.args.get("keyword")
-
+        print(page_parameter
+              ,keyword_parameter)
 
     except:
         return handle_error({"code": 400, "message": "Invalid query string"}), 400
