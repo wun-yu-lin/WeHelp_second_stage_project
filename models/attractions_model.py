@@ -83,7 +83,7 @@ def get_attractions(keyword=None, page=1):
         mysql_connection.close()
 
 
-def get_attractions_by_id(id=1):
+def get_attraction_by_id(id=1):
 
     mysql_connection = get_mysql_connection_from_pool(mysql_connection_pool)
     cursor = mysql_connection.cursor(dictionary=True)
