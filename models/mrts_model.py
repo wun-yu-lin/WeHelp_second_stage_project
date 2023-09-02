@@ -55,12 +55,11 @@ def get_mrt_data():
         arr= []
         for item in res_data:
             arr.append(item["mrt"])
-        return arr
     except Exception as err:
         print(err)
         return jsonify({"error": True, "message": "Server error"}), 500
     finally:
         cursor.close()
         mysql_connection.close()
-
+    return arr
     

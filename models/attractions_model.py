@@ -75,12 +75,15 @@ def get_attractions(keyword=None, page=1):
             results[pointer]["images"] = item["images"].split(",")
             pointer+=1
 
-        return results
+ 
     except Exception as err:
         print(err)
+        return errorhandling.handle_error({"code": 400, "message": "MySQL Server error"}), 400
     finally:
         cursor.close()
         mysql_connection.close()
+
+    return results
 
 
 def get_attraction_by_id(id=1):
@@ -96,7 +99,14 @@ def get_attraction_by_id(id=1):
         results = cursor.fetchone()
         results["images"] = results["images"].split(",")
 
-        return results
+        
     except Exception as err:
         print(err)
-        return errorhandling.handle_error({"code": 400, "message": "Server error"}), 400
+        return errorhandling.handle_error({"code": 400, "message": "MySQL Server error"}), 400
+    finally:
+        if mysql_connection.in_transaction:
+            mysql_connection.rollback()
+        cursor.close()
+        mysql_connection.close()
+
+    return results

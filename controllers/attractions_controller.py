@@ -25,12 +25,15 @@ def get_attractions() -> object:
 def get_attraction_by_id(attractionId) -> object:
     try:
         attractionId = int(attractionId)
-        res_data = attractions_model.get_attraction_by_id(attractionId)
-        if res_data==None:
-            return jsonify({"error":True, "message":"Not attractoin data"}), 400
-        return jsonify({"data":res_data}),200
+
 
     except:
         return jsonify({"error": True, "message": "Invalid query string"}), 400
 
-
+    try:
+        res_data = attractions_model.get_attraction_by_id(attractionId)
+        if res_data==None:
+            return jsonify({"error":True, "message":"Not attractoin data"}), 400
+    except:
+        return jsonify({"error": True, "message": "mysql server error"}), 500
+    return jsonify({"data":res_data}),200
