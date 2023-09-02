@@ -32,5 +32,13 @@ def thankyou():
 
 
 
+def main():
+	try:
+		app.run(host="0.0.0.0",port=3000)
+	except Exception as err:
+		print(err)
+		main()
+
+
 if __name__=="__main__":
-	app.run(host="0.0.0.0",port=3000)
+	main()
