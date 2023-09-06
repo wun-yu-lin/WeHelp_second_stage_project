@@ -249,9 +249,11 @@ body {
   margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: flex-start;
   margin: 15px;
   row-gap: 30px;
+  -moz-column-gap: 30px;
+       column-gap: 30px;
 }
 
 .attraction_card {
@@ -447,9 +449,12 @@ body {
     justify-content: space-between;
     align-items: center;
     display: flex;
+    padding-left: 15px;
+    padding-right: 30px;
   }
   .list-bar {
     display: flex;
+    width: calc(100% - 80px);
     flex-direction: row;
     justify-content: flex-start;
     overflow-x: hidden;
@@ -626,7 +631,7 @@ body {
        object-fit: cover;
   }
   .section_slogan {
-    width: 340px;
+    width: 320px;
     height: 169px;
     position: relative;
     top: -260px;

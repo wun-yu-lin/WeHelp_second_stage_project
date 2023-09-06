@@ -45,12 +45,12 @@ document.addEventListener("scroll", function (e) {
 });
 
 function navbar_scroll_left() {
-    listBar.scrollBy({ left: -300, behavior: 'smooth' }); 
+    listBar.scrollBy({ left: -200, behavior: 'smooth' }); 
    
 }
 
 function navbar_scroll_right() {
-    listBar.scrollBy({ left: 300, behavior: 'smooth' });
+    listBar.scrollBy({ left: 200, behavior: 'smooth' });
 }
 
 
