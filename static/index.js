@@ -1,9 +1,48 @@
 const listBar = document.getElementsByClassName("list-bar")[0];
-var pageIndex = 0;
+
+
+////Gobal variable, 頁面有做更動時，務必注意變數的使用
+var keyword = null; //搜尋關鍵字參數
+var nextPage = "" //網頁是否有下一頁
+////
 
 get_attractions_data_and_reflush_attraction_grid();
 get_mrt_data_and_reflush_mrt_navbar();
 
+//add event listener
+document.addEventListener("scroll", function (e) {
+    let scrollTop = document.documentElement.scrollTop;
+    let windowHeight = document.documentElement.clientHeight
+    let scrollHeight = document.documentElement.scrollHeight
+
+    // 確認scrolling to bottom, and nextPage is not null
+    if (scrollTop + windowHeight >= scrollHeight && nextPage != null) {
+
+        //get data from server
+        currentUrl = window.location.href; 
+        if (keyword == null){
+            url = `${currentUrl}/api/attractions?page=${nextPage}`
+        }else{
+            url = `${currentUrl}/api/attractions?page=${nextPage}&keyword=${keyword}`
+        }
+        data = fetch(url)
+            .then((response)=>{
+                return response.json();
+            })
+            .then((result)=>{
+                console.log(result);
+                const attraction_arr =result["data"]
+                attraction_arr.forEach(element => {
+                    add_attraction_card(element);
+                });
+                nextPage = result["nextPage"];
+                return result;
+            }) 
+            .catch((error)=>{
+                console.log(error);
+            });
+    }
+});
 
 function navbar_scroll_left() {
     listBar.scrollBy({ left: -300, behavior: 'smooth' }); 
@@ -21,10 +60,12 @@ function add_attraction_card(attraction_object){
     const attraction_category = attraction_object["category"];
     const attraction_src = attraction_object["images"][0];
     const attractions_container = document.getElementsByClassName("attraction_grid")[0];
+    const attraction_id = attraction_object["id"];
     
 
     const attraction_card = document.createElement("div");
     attraction_card.className = "attraction_card content_div_div";
+    attraction_card.id = attraction_id;
     const attraction_card_cotent = `
         <div class="attraction_card content_div_div">
             <img class="attraction_img card-body" src=${attraction_src} alt="">
@@ -42,9 +83,56 @@ function add_attraction_card(attraction_object){
     
 }
 
-function mrt_button_search(){
-    console.log("mrt_button_search");
+//nav-bar 按下去後觸發, 可以按照mrt來搜尋台北景點
+function mrt_button_search(event){
+    const mrt_name = event.target.id;
+    const search_input_element = document.getElementsByClassName("search_input")[0];
+    search_input_element.value = mrt_name;
+    search_keyword_reflush_attraction_card();
+    
+    
 }
+
+// 從search bar取得關鍵字，並且搜尋景點, 
+function search_keyword_reflush_attraction_card(){
+    console.log("search_keyword_reflush_attraction_card");
+    const search_input_element = document.getElementsByClassName("search_input")[0];
+    const search_keyword = search_input_element.value;
+
+    if (search_keyword == undefined || search_keyword == ""){
+        console.log("search_keyword is empty");
+        return;
+    }
+    //clean the container
+    const attractions_container = document.getElementsByClassName("attraction_grid")[0];
+    attractions_container.innerHTML = "";
+    nextPage = 0;
+    
+    //settign url
+    const currentUrl = window.location.href;
+    const url = `${currentUrl}/api/attractions?page=0&keyword=${search_keyword}`;
+
+    //get data from server
+    data = fetch(url)
+            .then((response)=>{
+                return response.json();
+            })
+            .then((result)=>{
+                console.log(result);
+                const attraction_arr =result["data"]
+                attraction_arr.forEach(element => {
+                    add_attraction_card(element);
+                });
+                nextPage = result["nextPage"];
+                return result;
+            }) 
+            .catch((error)=>{
+                console.log(error);
+            });
+
+}
+    
+
 
 function add_mrt_navbar(mrt_name){
     const mrt_listbar_div = document.getElementsByClassName("list-bar")[0];
@@ -67,18 +155,18 @@ function get_attractions_data_and_reflush_attraction_grid() {
     //get data from server
     currentUrl = window.location.href; 
     console.log(currentUrl);
-    url = currentUrl + "api/attractions?page=" + pageIndex;
+    url = currentUrl + "api/attractions?page=0"
     data = fetch(url)
         .then((response)=>{
             return response.json();
         })
         .then((result)=>{
-            if (result["nextPage"] != null){
-                const attraction_arr =result["data"]
-                attraction_arr.forEach(element => {
-                    add_attraction_card(element);
-                });
-            }
+            console.log(result);
+            const attraction_arr =result["data"]
+            attraction_arr.forEach(element => {
+                add_attraction_card(element);
+            });
+            nextPage = result["nextPage"];
             return result;
             
         }) 

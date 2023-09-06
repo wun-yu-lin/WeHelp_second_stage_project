@@ -197,6 +197,7 @@ html, body {
   flex-direction: row;
   justify-content: flex-start;
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 .mrt_search_button {
