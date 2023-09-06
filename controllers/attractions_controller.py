@@ -17,7 +17,15 @@ def get_attractions() -> object:
     ##get data 
     try:
         res_data =  attractions_model.get_attractions(keyword_parameter, page_parameter)
-        return jsonify({"nextPage": int(page_parameter)+1, "data":res_data}),200
+        nextPage = int(page_parameter)+1
+        #無第13筆資料，代表沒有下一頁
+        if len(res_data) <13:
+            nextPage = None
+        ##修改資料數量為12筆
+        if (len(res_data)==13):
+            res_data.pop()
+
+        return jsonify({"nextPage": nextPage, "data":res_data}),200
     except:
         return jsonify({"error": True, "message": "Server error"})
     

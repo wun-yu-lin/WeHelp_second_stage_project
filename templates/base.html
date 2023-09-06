@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='/css/style.css') }}">
+  <link rel="stylesheet" href="../static/css/style.css">
+  <title>Taipei Trip 台北一日遊</title>
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header class="container wrapper_header flex">
+      <div class="div_header flex container">
+        <div class="container header_div flex">
+          <li class="header_div_li"><a class="header_div_li_a" href="#">台北一日遊</a></li>
+        </div>
+        <div class="header_div_div flex"> 
+          <li class="header_div_div_li flex">
+            <button class="header_div_div_li_button" type="button">預定行程</button>
+          <li class="header_div_div_li flex">
+            <button class="header_div_div_li_button" type="button">登入/註冊</button>
+            </li>
+        </div>
+      </div>
+
+  
+    </header>
+    {% block content %}
+    {% endblock %}
+      
+  </div>
+    
+  
+</body>
+<br>
+<footer class="footer flex">
+  <div class="footer flex">
+    <div class="footer_div">
+      <p class="footer_div_p">COPYRIGHT @ 2021 台北一日遊.</p>
+    </div>
+  </div>
+</footer>
+<script src="{{ url_for('static', filename='/index.js') }}"></script>
+</html>

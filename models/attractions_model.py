@@ -47,7 +47,7 @@ def get_attractions(keyword=None, page=1):
     cursor = mysql_connection.cursor(dictionary=True)
     
     page = int(page)
-    page_number =12
+    page_number =13
     data_start = page*12
 
     ##filter error query string
