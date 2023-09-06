@@ -95,7 +95,6 @@ function mrt_button_search(event){
 
 // 從search bar取得關鍵字，並且搜尋景點, 
 function search_keyword_reflush_attraction_card(){
-    console.log("search_keyword_reflush_attraction_card");
     const search_input_element = document.getElementsByClassName("search_input")[0];
     const search_keyword = search_input_element.value;
 
@@ -118,7 +117,6 @@ function search_keyword_reflush_attraction_card(){
                 return response.json();
             })
             .then((result)=>{
-                console.log(result);
                 const attraction_arr =result["data"]
                 attraction_arr.forEach(element => {
                     add_attraction_card(element);
@@ -161,7 +159,7 @@ function get_attractions_data_and_reflush_attraction_grid() {
             return response.json();
         })
         .then((result)=>{
-            console.log(result);
+
             const attraction_arr =result["data"]
             attraction_arr.forEach(element => {
                 add_attraction_card(element);
