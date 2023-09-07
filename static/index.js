@@ -9,15 +9,11 @@ var nextPage = "" //網頁是否有下一頁
 get_attractions_data_and_reflush_attraction_grid();
 get_mrt_data_and_reflush_mrt_navbar();
 
-//add event listener
-document.addEventListener("scroll", function (e) {
-    let scrollTop = document.documentElement.scrollTop;
-    let windowHeight = document.documentElement.clientHeight
-    let scrollHeight = document.documentElement.scrollHeight
 
-    // 確認scrolling to bottom, and nextPage is not null
-    if (scrollTop + windowHeight >= scrollHeight && nextPage != null) {
-
+//add InstersectionObserver
+const scroll_end_callback_function_add_attractions_card = (entries, observe) => {    
+    if (entries[0].isIntersecting) {
+        //add more atrraction card
         //get data from server
         currentUrl = window.location.href; 
         if (keyword == null){
@@ -25,24 +21,73 @@ document.addEventListener("scroll", function (e) {
         }else{
             url = `${currentUrl}/api/attractions?page=${nextPage}&keyword=${keyword}`
         }
-        data = fetch(url)
+        if (nextPage !== null){
+            data = fetch(url)
             .then((response)=>{
                 return response.json();
             })
             .then((result)=>{
-                console.log(result);
                 const attraction_arr =result["data"]
-                attraction_arr.forEach(element => {
-                    add_attraction_card(element);
-                });
+                if (attraction_arr !== undefined){
+                    attraction_arr.forEach(element => {
+                        add_attraction_card(element);
+                    });
+                   }
                 nextPage = result["nextPage"];
                 return result;
             }) 
             .catch((error)=>{
                 console.log(error);
             });
+        }
     }
-});
+        }
+
+const interSectionObserveroOtion = {
+    threshold: [0.5],
+    };
+const scrolldown_observer = new IntersectionObserver(
+    scroll_end_callback_function_add_attractions_card,
+    interSectionObserveroOtion);
+scrolldown_observer.observe(document.querySelector(".footer"));
+
+
+  
+
+// //add event listener
+// document.addEventListener("scroll", function (e) {
+//     let scrollTop = document.documentElement.scrollTop;
+//     let windowHeight = document.documentElement.clientHeight
+//     let scrollHeight = document.documentElement.scrollHeight
+
+//     // 確認scrolling to bottom, and nextPage is not null
+//     if (scrollTop + windowHeight >= scrollHeight && nextPage != null) {
+
+//         //get data from server
+//         currentUrl = window.location.href; 
+//         if (keyword == null){
+//             url = `${currentUrl}/api/attractions?page=${nextPage}`
+//         }else{
+//             url = `${currentUrl}/api/attractions?page=${nextPage}&keyword=${keyword}`
+//         }
+//         data = fetch(url)
+//             .then((response)=>{
+//                 return response.json();
+//             })
+//             .then((result)=>{
+//                 console.log(result);
+//                 const attraction_arr =result["data"]
+//                 attraction_arr.forEach(element => {
+//                     add_attraction_card(element);
+//                 });
+//                 nextPage = result["nextPage"];
+//                 return result;
+//             }) 
+//             .catch((error)=>{
+//                 console.log(error);
+//             });
+//     }
+// });
 
 function navbar_scroll_left() {
     listBar.scrollBy({ left: -200, behavior: 'smooth' }); 
@@ -152,7 +197,6 @@ function get_attractions_data_and_reflush_attraction_grid() {
 
     //get data from server
     currentUrl = window.location.href; 
-    console.log(currentUrl);
     url = currentUrl + "api/attractions?page=0"
     data = fetch(url)
         .then((response)=>{

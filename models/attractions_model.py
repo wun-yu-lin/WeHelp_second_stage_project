@@ -79,7 +79,8 @@ def get_attractions(keyword=None, page=1):
  
     except Exception as err:
         print(err)
-        return errorhandling.handle_error({"code": 400, "message": "MySQL Server error"}), 400
+        results = errorhandling.handle_error({"code": 400, "message": "MySQL Server error"}), 400
+
     finally:
         cursor.close()
         mysql_connection.close()
@@ -103,7 +104,7 @@ def get_attraction_by_id(id=1):
         
     except Exception as err:
         print(err)
-        return errorhandling.handle_error({"code": 400, "message": "MySQL Server error"}), 400
+        results= errorhandling.handle_error({"code": 400, "message": "MySQL Server error"}), 400
     finally:
         if mysql_connection.in_transaction:
             mysql_connection.rollback()
