@@ -258,7 +258,7 @@ body {
 
 .attraction_card {
   flex-basis: 20px;
-  border: 1px solid #c9c9c9;
+  border: 1px solid #E8E8E8;
   border-radius: 5px;
   width: 270px;
 }
@@ -368,7 +368,7 @@ body {
     flex-direction: row;
   }
   .header_div_div {
-    width: 165px;
+    width: 180px;
     height: 34px;
   }
   .header_div_div_li_button {
@@ -499,12 +499,15 @@ body {
     justify-content: space-around;
     margin: 15px;
     row-gap: 30px;
+    -moz-column-gap: 30px;
+         column-gap: 30px;
   }
   .attraction_card {
-    flex-basis: 20px;
-    border: 1px solid #c9c9c9;
+    flex: 1 1 auto;
+    flex-basis: 270px;
+    border: 1px solid #E8E8E8;
     border-radius: 5px;
-    width: 270px;
+    width: 100%;
   }
   .attraction_card img {
     width: 100%;
@@ -605,15 +608,16 @@ body {
     line-height: 34px;
   }
   .header_div_div_li {
-    padding: 10px;
+    padding: 5px;
     align-items: center;
   }
   .header_div {
     flex-direction: row;
   }
   .header_div_div {
-    width: 165px;
+    width: 170px;
     height: 34px;
+    justify-content: center;
   }
   .header_div_div_li_button {
     font-size: 15px;
@@ -741,12 +745,15 @@ body {
     justify-content: space-around;
     margin: 15px;
     row-gap: 30px;
+    -moz-column-gap: 30px;
+         column-gap: 30px;
   }
   .attraction_card {
-    flex-basis: 20px;
-    border: 1px solid #c9c9c9;
+    flex-basis: 320px;
+    border: 1px solid #E8E8E8;
     border-radius: 5px;
-    width: 320px;
+    width: 100%;
+    flex: 1 1 auto;
   }
   .attraction_card img {
     width: 100%;

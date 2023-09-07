@@ -521,13 +521,16 @@ body {
         justify-content: space-around;
         margin: 15px;
         row-gap: 30px;
+        column-gap: 30px;
+ 
     }
 
     .attraction_card {
-        flex-basis: 20px;
+        flex: 1 1 auto;
+        flex-basis: 270px;
         border: 1px solid #E8E8E8;
         border-radius: 5px;
-        width: 270px;
+        width: 100%;
 
         img {
             width: 100%;
@@ -646,8 +649,9 @@ body {
         flex-direction: row;
     }
     .header_div_div {
-        width: 180px;
+        width: 170px;
         height: 34px;
+        justify-content: center;
     }
     .header_div_div_li_button {
         font-size: 15px;
@@ -792,13 +796,16 @@ body {
         justify-content: space-around;
         margin: 15px;
         row-gap: 30px;
+        column-gap: 30px;
     }
 
     .attraction_card {
-        flex-basis: 20px;
+        flex-basis: 320px;
         border: 1px solid #E8E8E8;
         border-radius: 5px;
-        width: 320px;
+        width: 100%;
+        flex: 1 1 auto;
+        
 
         img {
             width: 100%;
