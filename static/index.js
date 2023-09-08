@@ -13,8 +13,9 @@ get_mrt_data_and_reflush_mrt_navbar();
 
 
 //add InstersectionObserver
-const scroll_end_callback_function_add_attractions_card = (entries, observe) => {   
+const scroll_end_callback_function_add_attractions_card = (entries, observe) => {  
     if (entries[0].isIntersecting && isLoading == false) {
+        isLoading = true; 
         //add more atrraction card
         //get data from server
         currentUrl = window.location.href; 
@@ -47,7 +48,8 @@ const scroll_end_callback_function_add_attractions_card = (entries, observe) => 
             isLoading = false;
         }
     }
-        }
+    isLoading = false; 
+    }
 
 const interSectionObserveroOtion = {
     threshold: [0.5],
