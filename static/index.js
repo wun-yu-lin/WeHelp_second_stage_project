@@ -4,18 +4,11 @@ const listBar = document.getElementsByClassName("list-bar")[0];
 ////Gobal variable, 頁面有做更動時，務必注意變數的使用
 var keyword = null; //搜尋關鍵字參數
 var nextPage = undefined //網頁是否有下一頁
-////
 
 get_attractions_data_and_reflush_attraction_grid();
 get_mrt_data_and_reflush_mrt_navbar();
 
 
-// function scrolldown_observer_disconnect(){
-//     scrolldown_observer.disconnect();
-// }
-// function scrolldown_observer_observe(){
-//     scrolldown_observer.observe(document.querySelector(".footer"));
-// }
 let scrolldown_observer = new IntersectionObserver(async(entries, observe)=>{
     if(entries[0].isIntersecting){
         targetElement = entries[0].target;
@@ -55,92 +48,6 @@ let scrolldown_observer = new IntersectionObserver(async(entries, observe)=>{
     })
 scrolldown_observer.observe(document.querySelector(".footer"));
 
-
-//add InstersectionObserver
-// const  scroll_end_callback_function_add_attractions_card = async (entries, observe) => {  
-//     if (entries[0].isIntersecting) {
-//         scrolldown_observer_disconnect();
-
-//         //add more atrraction card
-//         //get data from server
-//         currentUrl = window.location.href; 
-//         if (keyword == null ){
-//             url = `${currentUrl}/api/attractions?page=${nextPage}`
-//         }else{
-//             url = `${currentUrl}/api/attractions?page=${nextPage}&keyword=${keyword}`
-//         }
-        
-
-//         if (nextPage !== undefined && nextPage !== null){
-            
-//             data = await fetch(url)
-//             .then((response)=>{
-//                 return response.json();
-//             })
-//             .then((result)=>{
-//                 const attraction_arr =result["data"]
-//                 if (attraction_arr !== undefined){
-//                     attraction_arr.forEach(element => {
-//                         add_attraction_card(element);
-//                     });
-//                    }
-//                 nextPage = result["nextPage"];
-//                 return result;
-//             }) 
-//             .catch((error)=>{
-//                 console.log(error);
-//             });
-//             isLoading = false;
-//         }
-//     }
-//     scrolldown_observer_observe();
-//     }
-
-// const interSectionObserveroOtion = {
-//     threshold: [0.95],
-//     };
-// let scrolldown_observer = new IntersectionObserver(
-//     scroll_end_callback_function_add_attractions_card,
-//     interSectionObserveroOtion);
-// scrolldown_observer.observe(document.querySelector(".footer"));
-
-
-  
-
-// //add event listener
-// document.addEventListener("scroll", function (e) {
-//     let scrollTop = document.documentElement.scrollTop;
-//     let windowHeight = document.documentElement.clientHeight
-//     let scrollHeight = document.documentElement.scrollHeight
-
-//     // 確認scrolling to bottom, and nextPage is not null
-//     if (scrollTop + windowHeight >= scrollHeight && nextPage != null) {
-
-//         //get data from server
-//         currentUrl = window.location.href; 
-//         if (keyword == null){
-//             url = `${currentUrl}/api/attractions?page=${nextPage}`
-//         }else{
-//             url = `${currentUrl}/api/attractions?page=${nextPage}&keyword=${keyword}`
-//         }
-//         data = fetch(url)
-//             .then((response)=>{
-//                 return response.json();
-//             })
-//             .then((result)=>{
-//                 console.log(result);
-//                 const attraction_arr =result["data"]
-//                 attraction_arr.forEach(element => {
-//                     add_attraction_card(element);
-//                 });
-//                 nextPage = result["nextPage"];
-//                 return result;
-//             }) 
-//             .catch((error)=>{
-//                 console.log(error);
-//             });
-//     }
-// });
 
 function navbar_scroll_left() {
     listBar.scrollBy({ left: -200, behavior: 'smooth' }); 
