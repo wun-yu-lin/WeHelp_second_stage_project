@@ -3,25 +3,30 @@ const listBar = document.getElementsByClassName("list-bar")[0];
 
 ////Gobal variable, 頁面有做更動時，務必注意變數的使用
 var keyword = null; //搜尋關鍵字參數
-var nextPage = "" //網頁是否有下一頁
+var nextPage = undefined //網頁是否有下一頁
+var isLoading = false; //是否正在載入資料
 ////
 
 get_attractions_data_and_reflush_attraction_grid();
 get_mrt_data_and_reflush_mrt_navbar();
 
 
+
 //add InstersectionObserver
-const scroll_end_callback_function_add_attractions_card = (entries, observe) => {    
-    if (entries[0].isIntersecting) {
+const scroll_end_callback_function_add_attractions_card = (entries, observe) => {   
+    if (entries[0].isIntersecting && isLoading == false) {
         //add more atrraction card
         //get data from server
         currentUrl = window.location.href; 
-        if (keyword == null){
+        if (keyword == null ){
             url = `${currentUrl}/api/attractions?page=${nextPage}`
         }else{
             url = `${currentUrl}/api/attractions?page=${nextPage}&keyword=${keyword}`
         }
-        if (nextPage !== null){
+        
+
+        if (nextPage !== undefined && nextPage !== null){
+            isLoading = true;
             data = fetch(url)
             .then((response)=>{
                 return response.json();
@@ -39,6 +44,7 @@ const scroll_end_callback_function_add_attractions_card = (entries, observe) => 
             .catch((error)=>{
                 console.log(error);
             });
+            isLoading = false;
         }
     }
         }
@@ -46,7 +52,7 @@ const scroll_end_callback_function_add_attractions_card = (entries, observe) => 
 const interSectionObserveroOtion = {
     threshold: [0.5],
     };
-const scrolldown_observer = new IntersectionObserver(
+let scrolldown_observer = new IntersectionObserver(
     scroll_end_callback_function_add_attractions_card,
     interSectionObserveroOtion);
 scrolldown_observer.observe(document.querySelector(".footer"));
@@ -112,7 +118,6 @@ function add_attraction_card(attraction_object){
     attraction_card.className = "attraction_card content_div_div";
     attraction_card.id = attraction_id;
     const attraction_card_cotent = `
-        <div class="attraction_card content_div_div">
             <img class="attraction_img card-body" src=${attraction_src} alt="">
             <div class="card-body content_div_div_div div_attraction_name">
                 <p class="p_attraction_name" id ="p_attraction_name">${attraction_name}</p>
@@ -121,7 +126,7 @@ function add_attraction_card(attraction_object){
                 <p class="p_mrt" id="p_mrt">${attraction_mrt}</p>
                 <p class="p_category" id="p_category">${attraction_category}</p>
             </div>
-        </div>
+
             `
     attraction_card.innerHTML = attraction_card_cotent;
     attractions_container.appendChild(attraction_card);

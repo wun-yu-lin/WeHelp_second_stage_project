@@ -1,6 +1,6 @@
 import mysql.connector
 import sys
-sys.path.insert(1, './')
+
 import config
 import errorhandling.errorhandling as errorhandling
 from flask import jsonify 
