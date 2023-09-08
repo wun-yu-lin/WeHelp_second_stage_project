@@ -10,20 +10,17 @@ get_attractions_data_and_reflush_attraction_grid();
 get_mrt_data_and_reflush_mrt_navbar();
 
 
-function scrolldown_observer_disconnect(){
-    scrolldown_observer.disconnect();
-}
-function scrolldown_observer_observe(){
-    scrolldown_observer.observe(document.querySelector(".footer"));
-}
-//add InstersectionObserver
-const  scroll_end_callback_function_add_attractions_card = async (entries, observe) => {  
-    if (entries[0].isIntersecting) {
-        scrolldown_observer_disconnect();
-
+// function scrolldown_observer_disconnect(){
+//     scrolldown_observer.disconnect();
+// }
+// function scrolldown_observer_observe(){
+//     scrolldown_observer.observe(document.querySelector(".footer"));
+// }
+let scrolldown_observer = new IntersectionObserver(async(entries, observe)=>{
+    if(entries[0].isIntersecting){
+        targetElement = entries[0].target;
+        observe.unobserve(entries[0].target);
         //add more atrraction card
-        //get data from server
-        currentUrl = window.location.href; 
         if (keyword == null ){
             url = `${currentUrl}/api/attractions?page=${nextPage}`
         }else{
@@ -50,19 +47,62 @@ const  scroll_end_callback_function_add_attractions_card = async (entries, obser
             .catch((error)=>{
                 console.log(error);
             });
-            isLoading = false;
-        }
-    }
-    scrolldown_observer_observe();
+       }
+       observe.observe(targetElement);
+       
     }
 
-const interSectionObserveroOtion = {
-    threshold: [0.95],
-    };
-let scrolldown_observer = new IntersectionObserver(
-    scroll_end_callback_function_add_attractions_card,
-    interSectionObserveroOtion);
+    })
 scrolldown_observer.observe(document.querySelector(".footer"));
+
+
+//add InstersectionObserver
+// const  scroll_end_callback_function_add_attractions_card = async (entries, observe) => {  
+//     if (entries[0].isIntersecting) {
+//         scrolldown_observer_disconnect();
+
+//         //add more atrraction card
+//         //get data from server
+//         currentUrl = window.location.href; 
+//         if (keyword == null ){
+//             url = `${currentUrl}/api/attractions?page=${nextPage}`
+//         }else{
+//             url = `${currentUrl}/api/attractions?page=${nextPage}&keyword=${keyword}`
+//         }
+        
+
+//         if (nextPage !== undefined && nextPage !== null){
+            
+//             data = await fetch(url)
+//             .then((response)=>{
+//                 return response.json();
+//             })
+//             .then((result)=>{
+//                 const attraction_arr =result["data"]
+//                 if (attraction_arr !== undefined){
+//                     attraction_arr.forEach(element => {
+//                         add_attraction_card(element);
+//                     });
+//                    }
+//                 nextPage = result["nextPage"];
+//                 return result;
+//             }) 
+//             .catch((error)=>{
+//                 console.log(error);
+//             });
+//             isLoading = false;
+//         }
+//     }
+//     scrolldown_observer_observe();
+//     }
+
+// const interSectionObserveroOtion = {
+//     threshold: [0.95],
+//     };
+// let scrolldown_observer = new IntersectionObserver(
+//     scroll_end_callback_function_add_attractions_card,
+//     interSectionObserveroOtion);
+// scrolldown_observer.observe(document.querySelector(".footer"));
 
 
   
