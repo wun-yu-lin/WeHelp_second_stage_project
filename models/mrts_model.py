@@ -1,6 +1,6 @@
 import mysql.connector
 import sys
-sys.path.insert(1, './')
+
 import config
 import errorhandling.errorhandling as errorhandling
 from flask import jsonify 
@@ -52,14 +52,14 @@ def get_mrt_data():
     try:
         cursor.execute(mysql_str)
         res_data = cursor.fetchall()
-        arr= []
+        resutls_arr= []
         for item in res_data:
-            arr.append(item["mrt"])
+            resutls_arr.append(item["mrt"])
     except Exception as err:
         print(err)
-        return jsonify({"error": True, "message": "Server error"}), 500
+        resutls_arr = jsonify({"error": True, "message": "Server error"}), 500
     finally:
         cursor.close()
         mysql_connection.close()
-    return arr
+    return resutls_arr
     

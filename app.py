@@ -1,6 +1,8 @@
 from flask import *
 import routes.attractions_bp as attractions_bp
 import routes.mrts_bp as mrts_bp
+import sys
+sys.path.insert(1, './')
 from werkzeug.exceptions import HTTPException
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
@@ -15,7 +17,7 @@ app.register_blueprint(attractions_bp.blueprints_v2)
 #/api/mrts
 app.register_blueprint(mrts_bp.blueprints)
 
-
+app.config
 # Pages
 @app.route("/")
 def index():
