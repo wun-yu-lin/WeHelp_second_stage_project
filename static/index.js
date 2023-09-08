@@ -4,18 +4,23 @@ const listBar = document.getElementsByClassName("list-bar")[0];
 ////Gobal variable, 頁面有做更動時，務必注意變數的使用
 var keyword = null; //搜尋關鍵字參數
 var nextPage = undefined //網頁是否有下一頁
-var isLoading = false; //是否正在載入資料
 ////
 
 get_attractions_data_and_reflush_attraction_grid();
 get_mrt_data_and_reflush_mrt_navbar();
 
 
-
+function scrolldown_observer_disconnect(){
+    scrolldown_observer.disconnect();
+}
+function scrolldown_observer_observe(){
+    scrolldown_observer.observe(document.querySelector(".footer"));
+}
 //add InstersectionObserver
-const scroll_end_callback_function_add_attractions_card = (entries, observe) => {  
-    if (entries[0].isIntersecting && isLoading == false) {
-        isLoading = true; 
+const  scroll_end_callback_function_add_attractions_card = async (entries, observe) => {  
+    if (entries[0].isIntersecting) {
+        scrolldown_observer_disconnect();
+
         //add more atrraction card
         //get data from server
         currentUrl = window.location.href; 
@@ -27,8 +32,8 @@ const scroll_end_callback_function_add_attractions_card = (entries, observe) => 
         
 
         if (nextPage !== undefined && nextPage !== null){
-            isLoading = true;
-            data = fetch(url)
+            
+            data = await fetch(url)
             .then((response)=>{
                 return response.json();
             })
@@ -48,7 +53,7 @@ const scroll_end_callback_function_add_attractions_card = (entries, observe) => 
             isLoading = false;
         }
     }
-    isLoading = false; 
+    scrolldown_observer_observe();
     }
 
 const interSectionObserveroOtion = {
