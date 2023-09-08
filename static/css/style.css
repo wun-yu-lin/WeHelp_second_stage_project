@@ -53,12 +53,12 @@ body {
 }
 
 .wrapper {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 0;
   min-height: 100vh;
-  width: 100%;
 }
 
 .wrapper_header {
@@ -210,6 +210,10 @@ body {
   flex: 0 0 auto;
 }
 
+.mrt_search_button:hover {
+  color: #494949;
+}
+
 .nav_div_button_left {
   background-image: url(../arrow_left.png);
   border: none;
@@ -247,17 +251,13 @@ body {
 
 .attraction_grid {
   margin-top: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   margin: 15px;
-  row-gap: 30px;
-  -moz-column-gap: 30px;
-       column-gap: 30px;
+  gap: 30px;
 }
 
 .attraction_card {
-  flex-basis: 20px;
   border: 1px solid #E8E8E8;
   border-radius: 5px;
   width: 270px;
@@ -491,20 +491,18 @@ body {
   .content {
     width: 100%;
     margin-top: -130px;
+    justify-content: center;
   }
   .attraction_grid {
     margin-top: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     margin: 15px;
-    row-gap: 30px;
-    -moz-column-gap: 30px;
-         column-gap: 30px;
+    gap: 30px;
   }
   .attraction_card {
     flex: 1 1 auto;
-    flex-basis: 270px;
+    flex-basis: 25%;
     border: 1px solid #E8E8E8;
     border-radius: 5px;
     width: 100%;
@@ -740,13 +738,10 @@ body {
   }
   .attraction_grid {
     margin-top: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
     margin: 15px;
-    row-gap: 30px;
-    -moz-column-gap: 30px;
-         column-gap: 30px;
+    gap: 30px;
   }
   .attraction_card {
     flex-basis: 320px;
