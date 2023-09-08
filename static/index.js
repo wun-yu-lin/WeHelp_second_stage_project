@@ -52,7 +52,7 @@ const scroll_end_callback_function_add_attractions_card = (entries, observe) => 
     }
 
 const interSectionObserveroOtion = {
-    threshold: [0.5],
+    threshold: [0.95],
     };
 let scrolldown_observer = new IntersectionObserver(
     scroll_end_callback_function_add_attractions_card,
