@@ -198,9 +198,10 @@
             cursor: pointer;
         }
         .select_travel_date {
-            padding: 5px;
+            padding: 5px 10px;
             min-height: 30px;
             cursor: pointer;
+            min-width: 150px;
         }
         .price_span {
             color: #666;
@@ -291,6 +292,25 @@
             line-height: normal;
         }
     }
+}
+
+//更換date 
+
+//for chrome
+input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+}
+//for firefox
+input[type="date"]::-moz-calendar-picker-indicator {
+    opacity: 0;
+}
+//add new icon
+input[type="date"] {
+    background-image: url("../date_icon.png");
+    background-repeat: no-repeat;
+    background-position: 95%;
+    background-size: 24px 24px;
+    padding-right: 20px;
 }
 
 
