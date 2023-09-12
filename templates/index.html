@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<link rel="stylesheet" href="../static/css/style.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/indexStyle.css') }}">
 <section class="section hero_section">
     <img class="section_img welcome_img" src="{{ url_for('static', filename='/welcome.png') }}" alt="welcome picture">
 </section>
@@ -178,4 +178,8 @@
     </div>
 </div>
 
+{% endblock %}
+
+{% block script_file %}
+<script src="{{ url_for('static', filename='/index.js') }}"></script>
 {% endblock %}
