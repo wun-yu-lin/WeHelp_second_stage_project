@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<link rel="stylesheet" href="../static/css/style.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/indexStyle.css') }}">
 <section class="section hero_section">
     <img class="section_img welcome_img" src="{{ url_for('static', filename='/welcome.png') }}" alt="welcome picture">
 </section>
@@ -26,7 +26,7 @@
             <button class="nav_div_button_left" onclick="navbar_scroll_left()"></button>
         </div>
         <div class="nav_div list-bar flex">
-            <button class="mrt_search_button" onclick="mrt_button_search()">test_left</button>
+            <!-- <button class="mrt_search_button" onclick="mrt_button_search()">test_left</button>
             <button class="mrt_search_button" onclick="mrt_button_search()">test1</button>
             <button class="mrt_search_button" onclick="mrt_button_search()">test2</button>
             <button class="mrt_search_button" onclick="mrt_button_search()">test3</button>
@@ -59,12 +59,12 @@
             <button class="mrt_search_button" onclick="mrt_button_search()">test30</button>
             <button class="mrt_search_button" onclick="mrt_button_search()">test31</button>
             <button class="mrt_search_button" onclick="mrt_button_search()">test32</button>
-            <button class="mrt_search_button" onclick="mrt_button_search()">test_right</button>
+            <button class="mrt_search_button" onclick="mrt_button_search()">test_right</button> -->
         </div>
         <button class="nav_div_button_right" onclick="navbar_scroll_right()"></button>
     </nav>
     <div class="container attraction_grid">
-        <div class="attraction_card content_div_div">
+        <!-- <div class="attraction_card content_div_div">
             <img class="attraction_img card-body" src="../static/img_test.jpg" alt="">
             <div class="card-body content_div_div_div div_attraction_name">
                 <p class="p_attraction_name" id ="p_attraction_name">LOVE 台北之愛 台灣之愛</p>
@@ -173,9 +173,13 @@
                 <p class="p_mrt" id="p_mrt">台北101 / 世貿</p>
                 <p class="p_category" id="p_category">公共藝術</p>
             </div>
-        </div>
+        </div> -->
         
     </div>
 </div>
 
+{% endblock %}
+
+{% block script_file %}
+<script src="{{ url_for('static', filename='/index.js') }}"></script>
 {% endblock %}

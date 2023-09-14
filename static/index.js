@@ -70,15 +70,16 @@ function add_attraction_card(attraction_object){
 
     const attraction_card = document.createElement("div");
     attraction_card.className = "attraction_card content_div_div";
+    attraction_card.onclick = redirect_to_attraction_id_page;
     attraction_card.id = attraction_id;
     const attraction_card_cotent = `
-            <img class="attraction_img card-body" src=${attraction_src} alt="">
-            <div class="card-body content_div_div_div div_attraction_name">
-                <p class="p_attraction_name" id ="p_attraction_name">${attraction_name}</p>
+            <img class="attraction_img card-body" src=${attraction_src} alt="" id=${attraction_id}>
+            <div class="card-body content_div_div_div div_attraction_name" id=${attraction_id}>
+                <p class="p_attraction_name" id =${attraction_id}>${attraction_name}</p>
             </div>
-            <div class="card-body content_div_div_div div_category">
-                <p class="p_mrt" id="p_mrt">${attraction_mrt}</p>
-                <p class="p_category" id="p_category">${attraction_category}</p>
+            <div class="card-body content_div_div_div div_category" id=${attraction_id}>
+                <p class="p_mrt" id=${attraction_id}>${attraction_mrt}</p>
+                <p class="p_category" id=${attraction_id}>${attraction_category}</p>
             </div>
 
             `
@@ -205,7 +206,12 @@ function get_mrt_data_and_reflush_mrt_navbar(){
 
 }
 
-
+function redirect_to_attraction_id_page(event){
+    let attraction_id = event.target.id;
+    let currentUrl = window.location.href;
+    let redirect_url = `${currentUrl}attraction/${attraction_id}`;
+    window.location.href = redirect_url;
+}
 
 
 
