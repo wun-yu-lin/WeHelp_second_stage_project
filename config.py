@@ -17,3 +17,7 @@ MYSQL_POOL_SIZE=10
 
 #sql filter string
 SQL_FILTER_STRING = "-","and","exec","insert","select","delete","update","count","*","chr","mid","master","truncate","char","declare",";","or","-","+","="
+
+##
+# SET SESSION group_concat_max_len = 1000000;
+GROUP_CONCAT_MAX_LEN = 1000000

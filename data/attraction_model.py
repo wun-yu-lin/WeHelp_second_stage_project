@@ -3,6 +3,9 @@ import sys
 sys.path.insert(1, './')
 import config
 
+# import subprocess
+# ##control groupconcat string limit in mySQL
+# subprocess.call("ps aux",shell=True)
 
 db_fig ={
     'host':config.MYSQL_HOST,
@@ -11,6 +14,10 @@ db_fig ={
     'database':config.MYSQL_DATABASE,
     "pool_name":"mysql_pool",
     "pool_size":10
+}
+
+query_config = {
+    "group_concat_max_len":config.GROUP_CONCAT_MAX_LEN
 }
 
 ##mysql connection pool

@@ -14,6 +14,11 @@ db_fig ={
     "pool_size":config.MYSQL_POOL_SIZE
 }
 
+
+query_config = {
+    "group_concat_max_len":config.GROUP_CONCAT_MAX_LEN
+}
+
 def filter_query_string(query_string_arr)->bool:
     sql_filter_arr = config.SQL_FILTER_STRING
 
@@ -55,6 +60,10 @@ def get_attractions(keyword=None, page=1):
 
     ##non keyword search
 
+    ##setting group_concat_max_len
+    cursor.execute("SET SESSION group_concat_max_len = %s", (config.GROUP_CONCAT_MAX_LEN,))
+
+
     if keyword==None or keyword==" ":
         mysql_str = "SELECT a.id, a.name, cat.category, a.description, a.address, a.transport, m.mrt, a.lat, a.lng, GROUP_CONCAT(DISTINCT img.src SEPARATOR ',') as images FROM attraction a LEFT JOIN attraction_info a_info on a.id = a_info.attraction_id LEFT JOIN mrt m on a.mrt_id = m.mrt_id LEFT JOIN category cat on a.category_id = cat.category_id LEFT JOIN image img on a.id = img.attraction_id GROUP BY a.id LIMIT %s,%s"
         cursor.execute(mysql_str, (data_start,page_number))
@@ -93,7 +102,9 @@ def get_attraction_by_id(id=1):
     mysql_connection = get_mysql_connection_from_pool(mysql_connection_pool)
     cursor = mysql_connection.cursor(dictionary=True)
 
-
+    ##setting group_concat_max_len
+    cursor.execute("SET SESSION group_concat_max_len = %s", (config.GROUP_CONCAT_MAX_LEN,))
+    
     mysql_str =  "SELECT a.id, a.name, cat.category, a.description, a.address, a.transport, m.mrt, a.lat, a.lng, GROUP_CONCAT(DISTINCT img.src SEPARATOR ',') as images FROM attraction a LEFT JOIN attraction_info a_info on a.id = a_info.attraction_id LEFT JOIN mrt m on a.mrt_id = m.mrt_id LEFT JOIN category cat on a.category_id = cat.category_id LEFT JOIN image img on a.id = img.attraction_id WHERE a.id = %s GROUP BY a.id"
 
     try:
