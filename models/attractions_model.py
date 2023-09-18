@@ -56,7 +56,7 @@ def get_attractions(keyword=None, page=1):
     data_start = page*12
 
     ##filter error query string
-    if filter_query_string([keyword])==False: return errorhandling.handle_error({"code": 400, "message": "Invalid query string"}), 400
+    if filter_query_string([keyword])==False: return errorhandling.handle_error({"code": 400, "message": "Invalid query string"})
 
     ##non keyword search
 
@@ -88,7 +88,7 @@ def get_attractions(keyword=None, page=1):
  
     except Exception as err:
         print(err)
-        results = errorhandling.handle_error({"code": 400, "message": "MySQL Server error"}), 400
+        results = errorhandling.handle_error({"code": 400, "message": "MySQL Server error"})
 
     finally:
         cursor.close()
@@ -115,7 +115,7 @@ def get_attraction_by_id(id=1):
         
     except Exception as err:
         print(err)
-        results= errorhandling.handle_error({"code": 400, "message": "MySQL Server error"}), 400
+        results= errorhandling.handle_error({"code": 400, "message": "MySQL Server error"})
     finally:
         if mysql_connection.in_transaction:
             mysql_connection.rollback()
