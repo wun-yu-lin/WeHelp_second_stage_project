@@ -98,49 +98,25 @@ function switch_attraction_info_img_dot(switch_index){
     let current_img_location = parseInt(document.getElementsByClassName("attraction-img-display")[0].id);
     let img_collection = document.getElementsByClassName("attraction-img")
     let img_collection_len = img_collection.length;
-    let img_non_display_index, img_display_index;
+    let display_index, non_display_index
 
     //get dot locatiob_index
     let current_dot_location = parseInt(document.getElementsByClassName("img_navbar_circle_button-current")[0].id);
     let dot_collection = document.getElementsByClassName("img_navbar_circle_button")
-    let dot_non_current_index, dot_current_index;
 
     //編碼錯誤刷新頁面
     if (current_dot_location != current_img_location) {
         location.reload()
     }
 
-
-    img_non_display_index=current_img_location;
-    dot_non_current_index=current_img_location;
-    //最後一個跳轉到第一個img
-    if(current_img_location+1==img_collection_len && switch_index == 1){
-
-        img_display_index=0;
-        dot_current_index=0;
-
-    //第一個跳轉到最後一個
-    }else if (current_img_location==0 && switch_index==-1){
-        img_display_index=img_collection_len-1;
-        dot_current_index=img_collection_len-1;
-
-    //正常情況跳轉
-    }else {
-        if (switch_index==1){
-            img_display_index=current_img_location+1;
-            dot_current_index=current_img_location+1;
-        }
-        if (switch_index==-1){
-            img_display_index=current_img_location-1;
-            dot_current_index=current_img_location-1;
-        }
-    }
-    
+    let target_value = (current_img_location+switch_index)%img_collection_len
+    non_display_index=current_img_location;
+    display_index=target_value;
     //重新設定 element class 來處理display狀態
-    img_collection[img_display_index].className = "attraction-img-display attraction-img"
-    img_collection[img_non_display_index].className = "attraction-img-non-display attraction-img"
-    dot_collection[dot_current_index].className = "img_navbar_circle_button-current img_navbar_circle_button"
-    dot_collection[dot_non_current_index].className = "img_navbar_circle_button-non-current img_navbar_circle_button"
+    img_collection[display_index].className = "attraction-img-display attraction-img"
+    img_collection[non_display_index].className = "attraction-img-non-display attraction-img"
+    dot_collection[display_index].className = "img_navbar_circle_button-current img_navbar_circle_button"
+    dot_collection[non_display_index].className = "img_navbar_circle_button-non-current img_navbar_circle_button"
     
 
 }

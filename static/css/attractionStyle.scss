@@ -298,15 +298,16 @@
 //更換date 
 
 //for chrome
-input[type="date"]::-webkit-calendar-picker-indicator {
+input[type=date]::-webkit-calendar-picker-indicator {
     opacity: 0;
 }
 //for firefox
-input[type="date"]::-moz-calendar-picker-indicator {
+input[type=date]::-moz-calendar-picker-indicator{
     opacity: 0;
 }
 //add new icon
-input[type="date"] {
+input[type=date] {
+    
     background-image: url("../date_icon.png");
     background-repeat: no-repeat;
     background-position: 95%;

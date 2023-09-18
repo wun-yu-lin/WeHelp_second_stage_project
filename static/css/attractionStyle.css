@@ -221,7 +221,7 @@
 }
 .attraction_info_card .travel_info_card .select_plan_radio:checked {
   background-color: #448899;
-  border: 1px solid white;
+  border: 2px solid white;
 }
 
 .information {
