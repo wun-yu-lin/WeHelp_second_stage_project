@@ -11,7 +11,7 @@ db_fig ={
     'user':config.MYSQL_USER,
     'password':config.MYSQL_PASSWORD,
     'database':config.MYSQL_DATABASE,
-    "pool_name":"mysql_pool",
+    "pool_name":"mrts_pool",
     "pool_size":config.MYSQL_POOL_SIZE
 }
 

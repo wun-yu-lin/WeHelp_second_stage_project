@@ -4,6 +4,7 @@ from werkzeug.exceptions import HTTPException
 ## Error handling
 def handle_error(e):
     #error handling
+    
     response_arg ={
         "headers": {
             "content-Type": "application/json"
