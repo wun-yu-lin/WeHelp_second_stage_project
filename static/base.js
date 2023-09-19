@@ -219,8 +219,11 @@ function logout_account(){
 }
 
 function controll_sign_message(message){
-
     document.querySelectorAll("#sign_message").forEach(element => {
-        element.innerText = message;
+        element.innerText = "";
+        setTimeout(function(){
+            element.innerText = message;
+        }, 10)
     })
+
 }
