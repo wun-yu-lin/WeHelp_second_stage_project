@@ -18,11 +18,15 @@
         <span class="sign_title">註冊會員帳號</span>
         <button class="sign_right_button" onclick=left_sign()></button>
       </div>
-        <input class="sign_input" id="user_username_signup" type="text" placeholder="輸入姓名">
-        <input class="sign_input" id="user_account_singup" type="email" placeholder="輸入電子信箱">
-      
-        <input id="user_password_signup" type="password" placeholder="輸入密碼">
-        <button class="sign_button" onclick=login_account()>註冊新帳戶</button>
+      <form action="javascript:void(0);" class="sign_form" id="signup_form">
+        <input class="sign_input" id="user_username_signup" type="text" placeholder="輸入姓名" maxlength="255" minlength="2">
+        <input class="sign_input" id="user_account_singup" type="email" placeholder="輸入電子信箱" maxlength="255" minlength="8">
+
+        <input id="user_password_signup" type="password" placeholder="輸入密碼" maxlength="255" minlength="8">
+        <button class="sign_button" onclick=signup_account()>註冊新帳戶</button>
+      </form>
+
+      <p class="sign_message" id="sign_message"></p>
       <div>
         <span class="sign_down_span">已經有帳戶了？</span>
         <span class="sign_down_span" onclick=change_element_to_login()>點此登入</span>
@@ -36,11 +40,16 @@
         <span class="sign_title">登入會員帳號</span>
         <button class="sign_right_button" onclick=left_sign()></button>
       </div>
-        <input class="sign_input" id="user_account_signin" type="email" placeholder="輸入電子信箱">
+        <form action="javascript:void(0);" class="sign_form" id="signin_form">
+          <input class="sign_input" id="user_account_signin" type="email" placeholder="輸入電子信箱" maxlength="255" minlength="8">
       
-        <input id="user_password_signin" type="password" placeholder="輸入密碼">
-        <button class="sign_button" onclick=login_account()>登入帳戶</button>
+          <input id="user_password_signin" type="password" placeholder="輸入密碼" maxlength="255" minlength="8">
+          <button class="sign_button" onclick=login_account()>登入帳戶</button>
+        </form>
+
+        <p class="sign_message" id="sign_message"></p>
       <div>
+        
         <span class="sign_down_span">還沒有帳戶？</span>
         <span class="sign_down_span" onclick=change_element_to_signup()>點此註冊</span>
       </div>
@@ -57,10 +66,11 @@
         <div class="header_div_div flex"> 
           <li class="header_div_div_li flex">
             <button class="header_div_div_li_button" type="button">預定行程</button>
-          <li class="header_div_div_li flex">
+          <li class="header_div_div_li flex non-display" id="header_div_div_li_sign">
             <button class="header_div_div_li_button" type="button" onclick=show_sign()>登入/註冊</button>
             </li>
-            <button class="header_div_div_li_button non-display" type="button">登出帳號</button>
+            <li class="header_div_div_li flex non-display" id="header_div_div_li_logout">
+              <button class="header_div_div_li_button" type="button" onclick=logout_account()>登出帳號</button>
             </li>
             
         </div>

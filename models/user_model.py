@@ -70,6 +70,34 @@ def get_user_data_by_email_password(email,password):
 
     return cursor_result
 
+def get_user_data_by_email(email):
+    
+    try:
+        email = str(email)
+    except Exception as err:
+        print(err)
+        return errorhandling.handle_error({"code": 400, "message": "Invalid query string"})
+    if filter_query_string([email])==False: return errorhandling.handle_error({"code": 400, "message": "Invalid query string"})
+    try:
+        mysql_connection = get_mysql_connection_from_pool(mysql_connection_pool)
+        cursor = mysql_connection.cursor(dictionary=True)
+
+        mysql_str = "SELECT u.id, u.name, u.email FROM user u WHERE email = %s"
+        cursor.execute(mysql_str,(email,))
+        cursor_result = cursor.fetchall()
+        mysql_connection.commit()
+
+    except Exception as err:
+        print(err)
+
+    finally:
+        if mysql_connection.in_transaction:
+            mysql_connection.rollback()
+        cursor.close()
+        mysql_connection.close()
+
+    return cursor_result
+
 def get_user_data_by_name_email(name,email):
     try:
         email = str(email)

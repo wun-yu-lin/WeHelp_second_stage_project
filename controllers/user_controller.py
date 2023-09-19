@@ -25,10 +25,10 @@ def post_user():
     request_object["password"] = hash_password(request_object["password"])
 
     ##check user alraedy exists or not
-    if user_model.get_user_data_by_email_password(email=request_object["email"],
-                                                  password=request_object["password"]
-                                                  ) != [] :
-        return errorhandling.handle_error({"code": 400, "message": "Acccount already signup "})
+    check_results  = user_model.get_user_data_by_email(email=request_object["email"])
+
+    if check_results != [] :
+        return errorhandling.handle_error({"code": 404, "message": "Account already signup or erorr user data"})
 
     ##insert user data
     try:
@@ -37,7 +37,7 @@ def post_user():
                                                     password=request_object["password"])
         print(insert_id)
     except:
-        return errorhandling.handle_error({"code": 500, "message": "Internal database erver error"})
+        return errorhandling.handle_error({"code": 500, "message": "Internal database server error"})
                                             
     
     return  jsonify({"ok":True}), 201
@@ -46,15 +46,19 @@ def post_user():
 def get_user_auth():
     request_bearer_token = request.headers["Authorization"]
     if request_bearer_token == None: return jsonify(None), 403
-    request_bearer_token = request_bearer_token.split("Bearer ")[1]
-    decode = jwt.decode(jwt=request_bearer_token, 
-                        key = config.HS256_KEY, 
-                        audience=request.host_url,
-                        algorithms=['HS256'],
-                        issuer='example.com',
-                        options={"verify_exp":True})
+    try:
+        request_bearer_token = request_bearer_token.split("Bearer ")[1]
+        decode = jwt.decode(jwt=request_bearer_token, 
+                            key = config.HS256_KEY, 
+                            audience=request.host_url,
+                            algorithms=['HS256'],
+                            issuer='example.com',
+                            options={"verify_exp":True})
 
-    return jsonify({"data":{"id":decode["id"], "name":decode["name"], "email":decode["email"]}}), 200
+        return jsonify({"data":{"id":decode["id"], "name":decode["name"], "email":decode["email"]}}), 200
+    except Exception as err:
+        print(err)
+        return jsonify(None), 400
     
 ##登入會員帳戶
 def put_user_auth():
