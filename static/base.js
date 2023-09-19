@@ -223,7 +223,7 @@ function controll_sign_message(message){
         element.innerText = "";
         setTimeout(function(){
             element.innerText = message;
-        }, 10)
+        }, 153)
     })
 
 }
