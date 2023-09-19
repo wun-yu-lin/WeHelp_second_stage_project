@@ -1,4 +1,5 @@
 from flask import jsonify,request
+import flask
 import errorhandling.errorhandling as errorhandling
 import models.user_model as user_model
 import hashlib
@@ -26,9 +27,11 @@ def post_user():
 
     ##check user alraedy exists or not
     check_results  = user_model.get_user_data_by_email(email=request_object["email"])
-
+    print(check_results)
+    if type(check_results) is flask.wrappers.Response:
+        return errorhandling.handle_error({"code": 400, "message": "請輸入正確的email格式, 不能有空白或是特殊符號"})
     if check_results != [] :
-        return errorhandling.handle_error({"code": 404, "message": "Account already signup or erorr user data"})
+        return errorhandling.handle_error({"code": 404, "message": "Email already signup!"})
 
     ##insert user data
     try:

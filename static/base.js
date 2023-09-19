@@ -81,18 +81,19 @@ async function login_account(){
     }catch(err){      
         console.log("login failed")
         console.log(err)
-        window.location.reload()
+        controll_sign_message(message="登入失敗，請重新登入")
+        // window.location.reload()
     }
 
 
-    console.log(parseData)
+    // console.log(parseData)
     //check login status
     if(parseData["error"] == true){
         console.log("login failed")
         controll_sign_message(message="登入失敗，請重新登入")
-        setTimeout(function(){
-            window.location.reload()
-        }, 1000)
+        // setTimeout(function(){
+        //     window.location.reload()
+        // }, 1000)
     }
     
     //login sucessfully save token
@@ -138,9 +139,9 @@ async function signup_account(){
     if(parseData["error"] == true){
         console.log("signup failed")
         controll_sign_message(message=parseData["message"])
-        setTimeout(function(){
-            window.location.reload()
-        }, 1000)
+        // setTimeout(function(){
+        //     window.location.reload()
+        // }, 1000)
         
     }
 
@@ -193,6 +194,7 @@ function show_sign(){
 }
 
 function change_element_to_signup(){
+    controll_sign_message(message="")
     document.querySelectorAll(".mask").forEach(element => {
         element.className = "mask non-display";
     })
@@ -202,6 +204,7 @@ function change_element_to_signup(){
 }
 
 function change_element_to_login(){
+    controll_sign_message(message="")
     document.querySelectorAll(".mask").forEach(element => {
         element.className = "mask non-display";
     })
