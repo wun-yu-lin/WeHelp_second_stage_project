@@ -204,6 +204,9 @@ body {
   flex-direction: column;
   gap: 10px;
 }
+.mask .sign_box_div .sign_message {
+  color: red;
+}
 
 html,
 body {
