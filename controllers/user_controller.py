@@ -28,7 +28,7 @@ def post_user():
 
     ##check user alraedy exists or not
     check_results  = user_model.get_user_data_by_email(email=request_object["email"])
-    print(check_results)
+    print(type(check_results))
     if type(check_results) is flask.wrappers.Response:
         return errorhandling.handle_error({"code": HTTPStatus.BAD_REQUEST, "message": "請輸入正確的email格式, 不能有空白或是特殊符號"})
     if check_results != [] :
@@ -90,12 +90,12 @@ def put_user_auth():
 
     ##create jwt token
     try:
-        exp_time_int = int(round((datetime.datetime.now() + datetime.timedelta(days=7)).timestamp()))
+
         payload = {
                 'iss': 'example.com', ## (Issuer) Token 的發行者
                 'sub':  str(request_object["email"]), ## (Subject) 也就是使用該 Token 的使用者
                 'aud':  str(request.host_url), #(Audience) Token 的接收者，也就是後端伺服器
-                'exp': str(exp_time_int),  #(Expiration Time) Token 的過期時間
+                'exp': datetime.datetime.now() + datetime.timedelta(days=7),  #(Expiration Time) Token 的過期時間
                 'id': query_results[0]["id"],
                 "email" : query_results[0]["email"],
                 "name" : query_results[0]["name"]
@@ -109,3 +109,5 @@ def put_user_auth():
     
 
     return jsonify({"token":token}), HTTPStatus.OK
+
+
