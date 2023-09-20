@@ -2,6 +2,7 @@ import mysql.connector
 import config
 import errorhandling.errorhandling as errorhandling
 from flask import jsonify 
+from http import HTTPStatus
 
 
 db_fig ={
@@ -48,8 +49,8 @@ def get_user_data_by_email_password(email,password):
         password = str(password)
     except Exception as err:
         print(err)
-        return errorhandling.handle_error({"code": 400, "message": "Invalid query string"})
-    if filter_query_string([email,password])==False: return errorhandling.handle_error({"code": 400, "message": "Invalid query string"})
+        return errorhandling.handle_error({"code": HTTPStatus.BAD_REQUEST, "message": "Invalid query string"})
+    if filter_query_string([email,password])==False: return errorhandling.handle_error({"code": HTTPStatus.BAD_REQUEST, "message": "Invalid query string"})
     try:
         mysql_connection = get_mysql_connection_from_pool(mysql_connection_pool)
         cursor = mysql_connection.cursor(dictionary=True)
@@ -76,8 +77,8 @@ def get_user_data_by_email(email):
         email = str(email)
     except Exception as err:
         print(err)
-        return errorhandling.handle_error({"code": 400, "message": "Invalid query string"})
-    if filter_query_string([email])==False: return errorhandling.handle_error({"code": 400, "message": "Invalid query string"})
+        return errorhandling.handle_error({"code": HTTPStatus.BAD_REQUEST, "message": "Invalid query string"})
+    if filter_query_string([email])==False: return errorhandling.handle_error({"code": HTTPStatus.BAD_REQUEST, "message": "Invalid query string"})
     try:
         mysql_connection = get_mysql_connection_from_pool(mysql_connection_pool)
         cursor = mysql_connection.cursor(dictionary=True)
@@ -104,8 +105,8 @@ def get_user_data_by_name_email(name,email):
         name = str(name)
     except Exception as err:
         print(err)
-        return errorhandling.handle_error({"code": 400, "message": "Invalid query string"})
-    if filter_query_string([name,email])==False: return errorhandling.handle_error({"code": 400, "message": "Invalid query string"})
+        return errorhandling.handle_error({"code": HTTPStatus.BAD_REQUEST, "message": "Invalid query string"})
+    if filter_query_string([name,email])==False: return errorhandling.handle_error({"code": HTTPStatus.BAD_REQUEST, "message": "Invalid query string"})
     try:
         mysql_connection = get_mysql_connection_from_pool(mysql_connection_pool)
         cursor = mysql_connection.cursor(dictionary=True)
@@ -125,7 +126,7 @@ def get_user_data_by_name_email(name,email):
         cursor.close()
         mysql_connection.close()
 
-    return cursor_result, 200
+    return cursor_result
 
 
 def insert_user_data_into_user_table(name, email, password):
@@ -137,8 +138,8 @@ def insert_user_data_into_user_table(name, email, password):
 
     except Exception as err:
         print(err)
-        return errorhandling.handle_error({"code": 400, "message": "Invalid query string"})
-    if filter_query_string([name,email,password])==False: return errorhandling.handle_error({"code": 400, "message": "Invalid query string"})
+        return errorhandling.handle_error({"code": HTTPStatus.BAD_REQUEST, "message": "Invalid query string"})
+    if filter_query_string([name,email,password])==False: return errorhandling.handle_error({"code": HTTPStatus.BAD_REQUEST, "message": "Invalid query string"})
 
 
     try:

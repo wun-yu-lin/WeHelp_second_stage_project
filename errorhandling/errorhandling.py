@@ -1,5 +1,6 @@
 from flask import make_response
 from werkzeug.exceptions import HTTPException
+from enum import Enum
 
 ## Error handling
 def handle_error(e):
@@ -13,3 +14,6 @@ def handle_error(e):
     #error handling
     response = make_response(response_arg, e["code"])
     return response
+
+class HTTPstatus(Enum):
+    BadRequest = 400
