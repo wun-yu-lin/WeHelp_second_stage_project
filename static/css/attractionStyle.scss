@@ -18,6 +18,7 @@
     justify-content: space-around;
 }
 
+
 .attraction_info_card {
     margin-top: 30px;
     max-width: 1200px;
@@ -228,7 +229,7 @@
         }
         .select_plan_radio:checked{
             background-color: #448899;
-            border: 1px solid white;
+            border: 2px solid white;
 
         }
     }
@@ -297,15 +298,16 @@
 //更換date 
 
 //for chrome
-input[type="date"]::-webkit-calendar-picker-indicator {
+input[type=date]::-webkit-calendar-picker-indicator {
     opacity: 0;
 }
 //for firefox
-input[type="date"]::-moz-calendar-picker-indicator {
+input[type=date]::-moz-calendar-picker-indicator{
     opacity: 0;
 }
 //add new icon
-input[type="date"] {
+input[type=date] {
+    
     background-image: url("../date_icon.png");
     background-repeat: no-repeat;
     background-position: 95%;

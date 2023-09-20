@@ -217,3 +217,4 @@ function redirect_to_attraction_id_page(event){
 
 
 
+

@@ -11,7 +11,7 @@ db_fig ={
     'user':config.MYSQL_USER,
     'password':config.MYSQL_PASSWORD,
     'database':config.MYSQL_DATABASE,
-    "pool_name":"mysql_pool",
+    "pool_name":"mrts_pool",
     "pool_size":config.MYSQL_POOL_SIZE
 }
 
@@ -57,7 +57,7 @@ def get_mrt_data():
             resutls_arr.append(item["mrt"])
     except Exception as err:
         print(err)
-        resutls_arr = jsonify({"error": True, "message": "Server error"}), 500
+        resutls_arr = jsonify({"error": True, "message": "Server error"})
     finally:
         cursor.close()
         mysql_connection.close()

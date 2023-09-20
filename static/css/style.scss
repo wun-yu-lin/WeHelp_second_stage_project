@@ -6,8 +6,64 @@
     font-family: "Noto Sans TC", sans-serif;
 }
 
-
-* html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+* html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+font,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
     margin: 0;
     padding: 0;
     border: 0;
@@ -17,7 +73,11 @@
     font-size: 100%;
     font-family: inherit;
     vertical-align: baseline;
+}
 
+//display
+.non-display {
+    display: none !important;
 }
 
 //components
@@ -28,8 +88,6 @@
     text-decoration: none;
     color: black;
 }
-
-
 
 .flex {
     display: flex;
@@ -45,6 +103,108 @@ body {
 }
 .f-28 {
     font-size: 28px;
+}
+
+.mask {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    z-index: 10000000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 80px;
+    background-color: rgba(0, 0, 0, 0.25);
+    .sign_top_bar {
+        width: 100% !important;
+        height: 10px !important;
+        position: absolute;
+        top: 0;
+        background: linear-gradient(270deg, #378 0%, #6ab 100%) !important;
+        border-radius: 5px 5px 0px 0px !important;
+    }
+    .sign_box_div {
+        width: 340px;
+        background-color: white;
+        box-shadow: 0px 4px 60px 0px #aaa;
+        border-radius: 6px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 15px;
+        padding-top: 25px;
+        position: relative;
+        .sign_title_div {
+            position: relative;
+            height: 27px;
+        }
+        .sign_title {
+            color: var(--secondary-color-gray-70, #666);
+            text-align: center;
+            font-size: 24px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 24px; /* 100% */
+        }
+        .sign_right_button {
+            position: absolute;
+            inset: 0px 0px auto auto;
+            background-image: url("../close.png");
+            background-repeat: no-repeat;
+            width: 23px;
+            height: 23px;
+            background-position: center;
+            background-color: #ffffff;
+        }
+        div {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        button {
+            width: 100%;
+            height: 47px;
+            border-radius: 5px;
+            color: var(--additional-color-white, #fff);
+            text-align: center;
+            font-size: 19px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 16px;
+            background-color: #489;
+        }
+        input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .sign_input_div {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .sign_down_span {
+            color: var(--secondary-color-gray-70, #666);
+            text-align: center;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 500;
+            height: 22px;
+        }
+        .sign_form{
+            width: 100%;
+            display:flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .sign_message {
+            color: red;
+        }
+    }
 }
 
 //footer 置底
@@ -86,7 +246,7 @@ body {
     z-index: 1000000;
     top: 0;
     left: 0;
-    border-bottom: 1px solid #E8E8E8;
+    border-bottom: 1px solid #e8e8e8;
 }
 
 .div_header {
@@ -236,8 +396,6 @@ body {
 //     display: flex;
 //     align-items: center;
 // }
-
-
 
 // //navbar right button
 // .nav_div_button_right {
@@ -424,7 +582,7 @@ body {
 //         flex-direction: column;
 //         justify-content: space-around;
 //         align-items: center;
-        
+
 //     }
 //     .slogan_text {
 //         color: white;
@@ -541,7 +699,7 @@ body {
 //         grid-template-columns: repeat(3, 1fr);
 //         margin: 15px;
 //         gap: 30px;
- 
+
 //     }
 
 //     .attraction_card {
@@ -700,7 +858,7 @@ body {
 //         justify-content: space-around;
 //         align-items: flex-start;
 //         margin: 10px;
-        
+
 //     }
 //     .slogan_text {
 //         color: white;
@@ -821,8 +979,7 @@ body {
 //         border: 1px solid #E8E8E8;
 //         border-radius: 5px;
 //         width: 100%;
-//         flex: 1 1 auto; 
-        
+//         flex: 1 1 auto;
 
 //         img {
 //             width: 100%;
