@@ -28,7 +28,6 @@ def post_user():
 
     ##check user alraedy exists or not
     check_results  = user_model.get_user_data_by_email(email=request_object["email"])
-    print(type(check_results))
     if type(check_results) is flask.wrappers.Response:
         return errorhandling.handle_error({"code": HTTPStatus.BAD_REQUEST, "message": "請輸入正確的email格式, 不能有空白或是特殊符號"})
     if check_results != [] :
@@ -48,10 +47,9 @@ def post_user():
     
 ##取得會員資料 需要ＪＷＴ認證
 def get_user_auth():
-    request_bearer_token = request.headers["Authorization"]
+    request_bearer_token = request.authorization.token
     if request_bearer_token == None: return jsonify(None), HTTPStatus.FORBIDDEN
     try:
-        request_bearer_token = request_bearer_token.split("Bearer ")[1]
         decode = jwt.decode(jwt=request_bearer_token, 
                             key = config.HS256_KEY, 
                             audience=request.host_url,
