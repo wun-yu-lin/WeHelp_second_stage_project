@@ -123,3 +123,4 @@ def get_attraction_by_id(id=1):
         mysql_connection.close()
 
     return results
+

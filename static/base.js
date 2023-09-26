@@ -7,6 +7,7 @@ function init() {
     check_user_login_status_control_element();
 }
 
+
 async function check_user_login_status_control_element() {
     if (localStorage.getItem("jwt_token") == null) {
         document.querySelectorAll("#header_div_div_li_sign").forEach(element => {
@@ -241,3 +242,20 @@ function controll_sign_message(message) {
 }
 
 
+function redirect_booking_and_check_signin() {
+
+    try {
+        let jwt_token = localStorage.getItem("jwt_token")
+        if (jwt_token == null) {
+            show_sign()
+            return
+        }
+
+ 
+        window.location.href = window.location.origin + "/booking"
+
+
+    } catch (err) {
+        console.log(err)
+    }
+}

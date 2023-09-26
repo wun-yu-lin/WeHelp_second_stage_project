@@ -11,6 +11,27 @@ from http import HTTPStatus
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
+def auth_signin_status(jwyt_token)-> object:
+    '''
+    A check auth function for jwt token
+    If return None, means token is invalid
+    If return object, means token is valid, and return user data
+    '''
+    if jwyt_token == None: return {"data": None}, HTTPStatus.FORBIDDEN
+    try:
+        decode = jwt.decode(jwt=jwyt_token, 
+                            key = config.HS256_KEY, 
+                            audience=request.host_url,
+                            algorithms=['HS256'],
+                            issuer='example.com',
+                            options={"verify_exp":True})
+
+        return {"data":{"id":decode["id"], "name":decode["name"], "email":decode["email"]}}
+    except Exception as err:
+        print(err)
+        return {"data": None}
+
+
 
 
 ##註冊會員帳戶
@@ -38,7 +59,7 @@ def post_user():
         insert_id= user_model.insert_user_data_into_user_table(name=request_object["name"],
                                                     email=request_object["email"],
                                                     password=request_object["password"])
-        print(insert_id)
+    
     except:
         return errorhandling.handle_error({"code": HTTPStatus.INTERNAL_SERVER_ERROR, "message": "Internal database server error"})
                                             
@@ -49,18 +70,11 @@ def post_user():
 def get_user_auth():
     request_bearer_token = request.authorization.token
     if request_bearer_token == None: return jsonify(None), HTTPStatus.FORBIDDEN
-    try:
-        decode = jwt.decode(jwt=request_bearer_token, 
-                            key = config.HS256_KEY, 
-                            audience=request.host_url,
-                            algorithms=['HS256'],
-                            issuer='example.com',
-                            options={"verify_exp":True})
-
-        return jsonify({"data":{"id":decode["id"], "name":decode["name"], "email":decode["email"]}}), HTTPStatus.OK
-    except Exception as err:
-        print(err)
+    auth_result = auth_signin_status(jwyt_token=request_bearer_token)
+    if auth_result["data"] == None:
         return jsonify(None), HTTPStatus.FORBIDDEN
+    
+    return jsonify(auth_result), HTTPStatus.OK
     
 ##登入會員帳戶
 def put_user_auth():
@@ -76,7 +90,6 @@ def put_user_auth():
 
     try:
         query_results = user_model.get_user_data_by_email_password(request_object["email"],request_object["password"])
-        print(query_results)
         if type(query_results) is flask.wrappers.Response or type(query_results) is Response:
             return query_results
         if query_results == []:
