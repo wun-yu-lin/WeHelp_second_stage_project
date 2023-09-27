@@ -27,12 +27,13 @@
             <div class="category_and_mrt_div">
                 <span class="span_category_and_mrt"></span>
             </div>
-            <div class="travel_info_card">
+            <!-- <div class="travel_info_card"> -->
+            <form action="javascript:void(0);" class="travel_info_card">
                 <span class="travel_info_card_header">訂購導覽行程</span>
                 <span class="travel_info_card_discription">以此景點為中心的一日行程，帶您探索城市角落故事</span>
                 <div class="select_date">
                     <span class="input_span">選擇日期：</span>
-                    <input class="select_travel_date" type="date" id="select_travel_date">
+                    <input class="select_travel_date" type="date" id="select_travel_date" req>
                     <button class="select_date_button" onclick=select_date_into_input()></button>
                 </div>
                 <div class="select_plan">
@@ -47,10 +48,10 @@
                     <span class="price_span">新台幣 OOOO 元</span>
                 </div>
                 <div>
-                    <button class="travel_plan_select_button">開始預約行程</button>
+                    <button class="travel_plan_select_button" onclick=booking_select_plan()>開始預約行程</button>
                 </div>
-
-            </div>
+            </form>
+            <!-- </div> -->
         </div>
     </div>
 

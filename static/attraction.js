@@ -1,3 +1,5 @@
+
+
 // new AirDatepicker('#myDatepicker');
 
 //載入網頁, 連接後端取得景點資料
@@ -14,8 +16,14 @@ function create_radio_eventListener(){
             
             let price_span = document.getElementsByClassName("price_span")[0];
 
-            if (target_value == 'morning') {price_span.textContent = "新台幣 2OOO 元"};
-            if (target_value == 'afternoon') {price_span.textContent = "新台幣 25OO 元"};
+            if (target_value == 'morning') {
+                price_span.textContent = "新台幣 2OOO 元"
+                price_span.value = 2000
+            };
+            if (target_value == 'afternoon') {
+                price_span.textContent = "新台幣 25OO 元"
+                price_span.value = 2500
+            };
         })
     })
 }
@@ -121,6 +129,88 @@ function switch_attraction_info_img_dot(switch_index){
 
 }
 
+
+
+async function booking_select_plan(){
+    //check login
+    let jwt_token = localStorage.getItem("jwt_token")
+    if (jwt_token == null) {
+        show_sign()
+        return
+    }else{
+        check_user_login_status()
+    }
+
+    //user input status
+    let select_date = document.getElementsByClassName("select_travel_date")[0].value
+    if (select_date == "") {alert("請選擇日期"); return}
+    let select_plan
+    document.querySelectorAll("#select_plan_radio").forEach(Element => {
+        if (Element.checked == true){select_plan = Element.defaultValue}
+    })
+    if (select_plan ==undefined) {alert("請選擇行程");  return}
+    let price = document.getElementsByClassName("price_span")[0].value
+    
+    let booking_data = {
+            "attractionId":parseInt(window.location.href.split('attraction/')[1]),
+            "date":select_date,
+            "time":select_plan,
+            "price":price
+    }
+    request_para = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("jwt_token")}`
+            },
+            body: JSON.stringify(booking_data)
+
+        }
+    
+
+    //create a post reqeust into webn server
+    let fetch_data = await fetch("/api/booking",request_para)
+    let parseData = await fetch_data.json()
+    console.log(parseData)
+
+}
+
+async function check_user_login_status() {
+
+    if (localStorage.getItem("jwt_token") != null) {
+        let request_obj = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("jwt_token")}`
+            }
+        }
+        try {
+            fetch_data = await fetch("/api/user/auth", request_obj)
+            parseData = await fetch_data.json()
+            console.log(parseData)
+            if (parseData == null) {
+                localStorage.removeItem("jwt_token");
+                //如果會員認證失敗，重新整理頁面
+                window.location.href = window.location.origin
+            } else {
+                return true
+            }
+
+
+        } catch (err) {
+            console.log("login failed")
+            console.log(err)
+
+        }
+
+
+
+    }
+
+
+
+};
 
 
 

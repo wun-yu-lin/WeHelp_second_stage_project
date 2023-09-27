@@ -56,6 +56,10 @@ def post_booking() -> Response:
         ##get request data
         request_data = request.get_json()
 
+        ##確認是否已經有相同的booking on same attraction id and date and time, 如有則修改原先訂單為取消
+        ##待寫 code
+        
+
         ##insert data into database
         post_results=  booking_model.post_booking_into_database(
             user_id=auth_result["data"]["id"], 
