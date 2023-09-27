@@ -110,11 +110,9 @@ def get_unpayment_booking_by_userID(userID:int):
 
 def post_booking_into_database(user_id:int, attraction_id:int, date:str, time:str, price:int,):
 
-
     # ##filter error query string
-    if filter_query_string([user_id, attraction_id, date, time, price])==False: return errorhandling.handle_error({"code": HTTPStatus.BAD_REQUEST, "message": "Invalid query string"})
-
-
+    if filter_query_string([user_id, attraction_id, date])==False: return errorhandling.handle_error({"code": HTTPStatus.BAD_REQUEST, "message": "Invalid query string"})
+    
     mysql_connection = get_mysql_connection_from_pool(mysql_connection_pool)
     cursor = mysql_connection.cursor(dictionary=True)
 
@@ -124,7 +122,7 @@ def post_booking_into_database(user_id:int, attraction_id:int, date:str, time:st
     try:
         cursor.execute(mysql_str, (date, time, price, 1, user_id, attraction_id))
         #get booking id
-        results = cursor.lastrowid
+        results = str(cursor.lastrowid)
         mysql_connection.commit()
         print("get booking by user_id success!")
         

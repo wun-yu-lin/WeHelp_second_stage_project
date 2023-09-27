@@ -9,11 +9,11 @@ create_radio_eventListener()
 
 
 //add radio event listener
-function create_radio_eventListener(){
+function create_radio_eventListener() {
     document.querySelectorAll(".select_plan_radio").forEach(item => {
-        item.addEventListener('click', event =>{
+        item.addEventListener('click', event => {
             let target_value = event.target.value
-            
+
             let price_span = document.getElementsByClassName("price_span")[0];
 
             if (target_value == 'morning') {
@@ -30,12 +30,12 @@ function create_radio_eventListener(){
 
 
 //載入網頁, 連接後端取得景點資料
-async function get_attraction_data_by_currentUrl_and_reflush_attraction_info(){
+async function get_attraction_data_by_currentUrl_and_reflush_attraction_info() {
     let current_url = window.location.href;
-    let host_url =current_url.split('attraction/')[0]
+    let host_url = current_url.split('attraction/')[0]
     let attraction_id = current_url.split('attraction/')[1]
     let fetch_url = `${host_url}/api/attraction/${attraction_id}`
-    try{
+    try {
         let data = await fetch(fetch_url);
         let parseData = await data.json();
 
@@ -43,7 +43,7 @@ async function get_attraction_data_by_currentUrl_and_reflush_attraction_info(){
         if (parseData['error']) {
             console.log("error in parseData")
             window.location.href = host_url
-        } 
+        }
         let attraction_data = parseData['data']
         let img_src_arr = attraction_data['images']
 
@@ -81,25 +81,25 @@ async function get_attraction_data_by_currentUrl_and_reflush_attraction_info(){
             document.getElementsByClassName("attraction_direction_span")[0].textContent = attraction_data['transport']
 
 
-            
+
 
         })
 
 
 
-    }catch (error){
+    } catch (error) {
         console.log(error)
         console.log("fetech url error!")
         window.location.href = host_url
     }
-  
-    
+
+
 
 }
 
 
-function switch_attraction_info_img_dot(switch_index){
-    if (switch_index == 0 ) return;
+function switch_attraction_info_img_dot(switch_index) {
+    if (switch_index == 0) return;
     switch_index = parseInt(switch_index)
 
     //get img location index
@@ -117,59 +117,59 @@ function switch_attraction_info_img_dot(switch_index){
         location.reload()
     }
 
-    let target_value = (current_img_location+switch_index)%img_collection_len
-    non_display_index=current_img_location;
-    display_index=target_value;
+    let target_value = (current_img_location + switch_index) % img_collection_len
+    non_display_index = current_img_location;
+    display_index = target_value;
     //重新設定 element class 來處理display狀態
     img_collection[display_index].className = "attraction-img-display attraction-img"
     img_collection[non_display_index].className = "attraction-img-non-display attraction-img"
     dot_collection[display_index].className = "img_navbar_circle_button-current img_navbar_circle_button"
     dot_collection[non_display_index].className = "img_navbar_circle_button-non-current img_navbar_circle_button"
-    
+
 
 }
 
 
 
-async function booking_select_plan(){
+async function booking_select_plan() {
     //check login
     let jwt_token = localStorage.getItem("jwt_token")
     if (jwt_token == null) {
         show_sign()
         return
-    }else{
+    } else {
         check_user_login_status()
     }
 
     //user input status
     let select_date = document.getElementsByClassName("select_travel_date")[0].value
-    if (select_date == "") {alert("請選擇日期"); return}
+    if (select_date == "") { alert("請選擇日期"); return }
     let select_plan
     document.querySelectorAll("#select_plan_radio").forEach(Element => {
-        if (Element.checked == true){select_plan = Element.defaultValue}
+        if (Element.checked == true) { select_plan = Element.defaultValue }
     })
-    if (select_plan ==undefined) {alert("請選擇行程");  return}
+    if (select_plan == undefined) { alert("請選擇行程"); return }
     let price = document.getElementsByClassName("price_span")[0].value
-    
+
     let booking_data = {
-            "attractionId":parseInt(window.location.href.split('attraction/')[1]),
-            "date":select_date,
-            "time":select_plan,
-            "price":price
+        "attractionId": parseInt(window.location.href.split('attraction/')[1]),
+        "date": select_date,
+        "time": select_plan,
+        "price": price
     }
     request_para = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("jwt_token")}`
-            },
-            body: JSON.stringify(booking_data)
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("jwt_token")}`
+        },
+        body: JSON.stringify(booking_data)
 
-        }
-    
+    }
+
 
     //create a post reqeust into webn server
-    let fetch_data = await fetch("/api/booking",request_para)
+    let fetch_data = await fetch("/api/booking", request_para)
     let parseData = await fetch_data.json()
     console.log(parseData)
 
@@ -188,7 +188,6 @@ async function check_user_login_status() {
         try {
             fetch_data = await fetch("/api/user/auth", request_obj)
             parseData = await fetch_data.json()
-            console.log(parseData)
             if (parseData == null) {
                 localStorage.removeItem("jwt_token");
                 //如果會員認證失敗，重新整理頁面
@@ -208,9 +207,12 @@ async function check_user_login_status() {
 
     }
 
-
-
 };
+
+
+
+
+
 
 
 
