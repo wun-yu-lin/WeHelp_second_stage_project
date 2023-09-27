@@ -32,8 +32,6 @@ def auth_signin_status(jwyt_token)-> object:
         return {"data": None}
 
 
-
-
 ##註冊會員帳戶
 def post_user():
     try:

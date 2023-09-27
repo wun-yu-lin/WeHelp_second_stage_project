@@ -3,6 +3,7 @@ import sys
 sys.path.insert(1, './')
 import config
 import errorhandling.errorhandling as errorhandling
+from http import HTTPStatus
 
 db_fig ={
     'host':config.MYSQL_HOST,
@@ -54,7 +55,7 @@ def get_unpayment_booking_by_userID(userID:int):
 
     cursor.execute("SET SESSION group_concat_max_len = %s", (config.GROUP_CONCAT_MAX_LEN,))
     ##filter error query string
-    if filter_query_string([userID])==False: return errorhandling.handle_error({"code": 400, "message": "Invalid query string"})
+    if filter_query_string([userID])==False: return errorhandling.handle_error({"code": HTTPStatus.BAD_REQUEST, "message": "Invalid query string"})
 
     mysql_str = "SELECT i.attraction_id, b.id , a.name, a.address, b.date,b.time, b.price, GROUP_CONCAT(DISTINCT i.src SEPARATOR ',') as images FROM taipei_travel.user u left join taipei_travel.booking b on u.id = b.user_id left join taipei_travel.attraction a on a.id = b.attraction_id left join taipei_travel.image i on a.id = i.attraction_id where u.id = %s AND b.booking_status = 1 group by b.id;"
  
@@ -67,7 +68,7 @@ def get_unpayment_booking_by_userID(userID:int):
  
     except Exception as err:
         print(err)
-        results = errorhandling.handle_error({"code": 400, "message": "MySQL Server error"})
+        results = errorhandling.handle_error({"code": HTTPStatus.INTERNAL_SERVER_ERROR, "message": "MySQL Server error"})
 
     finally:
         cursor.close()
@@ -78,10 +79,59 @@ def get_unpayment_booking_by_userID(userID:int):
 
 
 def post_booking_into_database(user_id:int, attraction_id:int, date:str, time:str, price:int,):
+    mysql_connection = get_mysql_connection_from_pool(mysql_connection_pool)
+    cursor = mysql_connection.cursor(dictionary=True)
+    
 
-    pass
+    # ##filter error query string
+    if filter_query_string([user_id, attraction_id, date, time, price])==False: return errorhandling.handle_error({"code": HTTPStatus.BAD_REQUEST, "message": "Invalid query string"})
+
+    mysql_str = "INSERT INTO taipei_travel.booking (date, time, price, booking_status, user_id, attraction_id) values (%s,%s, %s, %s, %s, %s);"
+
+ 
+    try:
+        
+        cursor.execute(mysql_str, (date, time, price, 1, user_id, attraction_id))
+        #get booking id
+        results = cursor.lastrowid
+        print("get booking by user_id success!")
+
+ 
+    except Exception as err:
+        print(err)
+        results = errorhandling.handle_error({"code": HTTPStatus.INTERNAL_SERVER_ERROR, "message": "MySQL Server error"})
+
+    finally:
+        cursor.close()
+        mysql_connection.close()
+
+    return results
 
 
-def change_booking_order_status_to_cancel(booking_order_id:int):
 
-    pass
+def change_booking_order_status_to_cancel_and_check_user_id(booking_id:int, user_id:int):
+    mysql_connection = get_mysql_connection_from_pool(mysql_connection_pool)
+    cursor = mysql_connection.cursor(dictionary=True)
+    
+
+    # ##filter error query string
+    if filter_query_string([booking_id])==False: return errorhandling.handle_error({"code": HTTPStatus.BAD_REQUEST, "message": "Invalid query string"})
+
+    mysql_str = "UPDATE taipei_travel.booking SET booking_status=0 where id = %s and user_id= %s;"
+
+    try:
+        cursor.execute(mysql_str, (booking_id, user_id))
+        #get booking id
+        results = cursor.lastrowid
+        mysql_connection.commit()
+        print("get booking by user_id success!")
+ 
+    except Exception as err:
+        print(err)
+        results = errorhandling.handle_error({"code": HTTPStatus.INTERNAL_SERVER_ERROR, "message": "MySQL Server error"})
+
+    finally:
+        cursor.close()
+        mysql_connection.close()
+
+    return results

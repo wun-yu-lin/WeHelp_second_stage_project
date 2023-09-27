@@ -1,26 +1,25 @@
-from flask import Blueprint, request, jsonify, blueprints
-import sys
-sys.path.insert(1, './')
+from flask import request, jsonify,Response
+import flask
+# import sys
+# sys.path.insert(1, './')
 from errorhandling.errorhandling import handle_error
 from controllers.user_controller import auth_signin_status
-
-from models import booking_model,attractions_model
+from models import booking_model
 from http import HTTPStatus
 
 
 ##get booking info 
-def get_booking():
-    try:
-        jwt_token = request.authorization.token
-        auth_result = auth_signin_status(jwt_token)
-        if auth_result["data"] == None:
-            return handle_error({"code": HTTPStatus.UNAUTHORIZED, "message": "請先登入會員"})
-    except Exception as err:
-        print(err)
-        return handle_error({"code": HTTPStatus.UNAUTHORIZED, "message": "請先登入會員"})
+def get_booking() -> Response:
+    if request.headers.get("Content-Type")!="application/json":
+        return handle_error({"code": HTTPStatus.BAD_REQUEST, "message": "Invalid request content type"})
+    jwt_token = request.authorization.token
+    auth_result = auth_signin_status(jwt_token)
+
     ##get booking info
     try:
         query_results = booking_model.get_unpayment_booking_by_userID(userID=auth_result["data"]["id"])
+        if query_results is flask.wrappers.Response:
+            return query_results
         data_result = []
         for item in query_results:
             data_result.append(
@@ -33,7 +32,8 @@ def get_booking():
                     },
                     "date": item["date"],
                     "time": item["time"],
-                    "price": item["price"]
+                    "price": item["price"],
+                    "booking_id": item["id"]
                 }
             )
     except Exception as err:
@@ -43,21 +43,59 @@ def get_booking():
     return jsonify({"data":data_result}), HTTPStatus.OK
 
 ##post booking info
-def post_booking():
+def post_booking() -> Response: 
+
+    ##check request content type
+    if request.headers.get("Content-Type")!="application/json":
+        return handle_error({"code": HTTPStatus.BAD_REQUEST, "message": "Invalid request content type"})
+    
     jwt_token = request.authorization.token
     auth_result = auth_signin_status(jwt_token)
-    if auth_result["data"] == None:
-        return handle_error({"code": HTTPStatus.UNAUTHORIZED, "message": "請先登入會員"})
+    
+    try:
+        ##get request data
+        request_data = request.get_json()
 
-    return "post_booking"
-
+        ##insert data into database
+        post_results=  booking_model.post_booking_into_database(
+            user_id=auth_result["data"]["id"], 
+            attraction_id=request_data["attractionId"], 
+            date=request_data["date"], 
+            time=request_data["time"], 
+            price=request_data["price"]
+            )
+    except Exception as err:
+        print(err)
+        return handle_error({"code": HTTPStatus.INTERNAL_SERVER_ERROR, "message": "伺服器內部錯誤"})
+    
+    ##error handling
+    if post_results is flask.wrappers.Response:
+        return post_results
+    
+    return jsonify({"ok":True}), HTTPStatus.OK
 
 ##delete booking info
-def delete_booking():
+def delete_booking() -> Response:
+    if request.headers.get("Content-Type")!="application/json":
+        return handle_error({"code": HTTPStatus.BAD_REQUEST, "message": "Invalid request content type"})
     jwt_token = request.authorization.token
     auth_result = auth_signin_status(jwt_token)
-    if auth_result["data"] == None:
-        return handle_error({"code": HTTPStatus.UNAUTHORIZED, "message": "請先登入會員"})
+    request_booking_id_arr = request.get_json()["booking_id"]
+    user_id = auth_result["data"]["id"]
+    
+    ##change booking order status 1 to 0 (cancel)
+    for item in request_booking_id_arr:
+        try:
+            delete_results = booking_model.change_booking_order_status_to_cancel_and_check_user_id(booking_id=item, user_id=user_id)
+        except Exception as err:
+            print(err)
+            return handle_error({"code": HTTPStatus.INTERNAL_SERVER_ERROR, "message": "伺服器內部錯誤"})
+        
+        ##error handling
+        if delete_results is flask.wrappers.Response:
+            return delete_results
+    
+    
 
-    return "delete_booking"
+    return jsonify({"ok":True}), HTTPStatus.OK
 
