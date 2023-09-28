@@ -1,3 +1,6 @@
+let date = new Date().getDate();
+let current = (new Date().getFullYear()) + "-" + (new Date().getMonth()) + "-" + (new Date().getDate()) ;
+console.log(current)
 
 
 // new AirDatepicker('#myDatepicker');
@@ -6,6 +9,7 @@
 
 get_attraction_data_by_currentUrl_and_reflush_attraction_info()
 create_radio_eventListener()
+select_travel_date_add_min_max_date()
 
 
 //add radio event listener
@@ -144,6 +148,7 @@ async function booking_select_plan() {
     //user input status
     let select_date = document.getElementsByClassName("select_travel_date")[0].value
     if (select_date == "") { alert("請選擇日期"); return }
+
     let select_plan
     document.querySelectorAll("#select_plan_radio").forEach(Element => {
         if (Element.checked == true) { select_plan = Element.defaultValue }
@@ -172,6 +177,13 @@ async function booking_select_plan() {
     let fetch_data = await fetch("/api/booking", request_para)
     let parseData = await fetch_data.json()
     console.log(parseData)
+    if (parseData['ok']) {
+        alert("預定成功")
+        window.location.href = window.location.origin+"/booking"
+    }
+    else {
+        alert("預定失敗")
+    }
 
 }
 
@@ -209,7 +221,19 @@ async function check_user_login_status() {
 
 };
 
+function select_travel_date_add_min_max_date(){
+    let today = new Date()
+    let year = today.getFullYear()
+    let month = today.getMonth()+1 < 10 ? "0"+(today.getMonth()+1) : today.getMonth()+1
+    let date = today.getDate() <10 ? "0"+today.getDate() : today.getDate()
+    let min_date = `${year}-${month}-${date}`
+    let max_date = `${year+1}-${month}-${date}`
 
+    let input_date = document.getElementsByClassName("select_travel_date")[0]
+    input_date.min = min_date
+    input_date.max = max_date
+
+}
 
 
 
