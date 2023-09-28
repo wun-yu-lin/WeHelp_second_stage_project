@@ -110,7 +110,6 @@ function switch_attraction_info_img_dot(switch_index) {
     let current_img_location = parseInt(document.getElementsByClassName("attraction-img-display")[0].id);
     let img_collection = document.getElementsByClassName("attraction-img")
     let img_collection_len = img_collection.length;
-    let display_index, non_display_index
 
     //get dot locatiob_index
     let current_dot_location = parseInt(document.getElementsByClassName("img_navbar_circle_button-current")[0].id);
@@ -122,8 +121,8 @@ function switch_attraction_info_img_dot(switch_index) {
     }
 
     let target_value = (current_img_location + switch_index) % img_collection_len
-    non_display_index = current_img_location;
-    display_index = target_value;
+    let non_display_index = current_img_location;
+    let display_index = target_value;
     //重新設定 element class 來處理display狀態
     img_collection[display_index].className = "attraction-img-display attraction-img"
     img_collection[non_display_index].className = "attraction-img-non-display attraction-img"
@@ -162,7 +161,7 @@ async function booking_select_plan() {
         "time": select_plan,
         "price": price
     }
-    request_para = {
+    let request_para = {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -198,8 +197,8 @@ async function check_user_login_status() {
             }
         }
         try {
-            fetch_data = await fetch("/api/user/auth", request_obj)
-            parseData = await fetch_data.json()
+            let fetch_data = await fetch("/api/user/auth", request_obj)
+            let parseData = await fetch_data.json()
             if (parseData == null) {
                 localStorage.removeItem("jwt_token");
                 //如果會員認證失敗，重新整理頁面

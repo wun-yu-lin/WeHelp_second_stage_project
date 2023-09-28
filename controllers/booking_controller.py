@@ -88,11 +88,13 @@ def post_booking() -> Response:
 
 ##delete booking info
 def delete_booking() -> Response:
+    print("delete_booking")
     if request.headers.get("Content-Type")!="application/json":
         return handle_error({"code": HTTPStatus.BAD_REQUEST, "message": "Invalid request content type"})
     jwt_token = request.authorization.token
     auth_result = auth_signin_status(jwt_token)
     request_booking_id_arr = request.get_json()["booking_id"]
+
     user_id = auth_result["data"]["id"]
     
     ##change booking order status 1 to 0 (cancel)

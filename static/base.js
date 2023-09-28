@@ -30,7 +30,6 @@ async function check_user_login_status_control_element() {
         try {
             fetch_data = await fetch("/api/user/auth", request_obj)
             parseData = await fetch_data.json()
-            console.log(parseData)
             if (parseData == null) {
                 localStorage.removeItem("jwt_token");
                 window.location.reload()

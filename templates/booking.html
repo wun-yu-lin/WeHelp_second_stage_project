@@ -3,38 +3,44 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='/css/bookingStyle.css') }}">
 <div class="content">
     <div class="booking_message_div">
-        <p class="booking_message_p">您好，林文昱，待預定行程如下</p>
+        <p class="booking_message_p">您好，林文昱，待預訂行程如下：</p>
     </div>
-    <div class="atrraction_travel_info_div">
-        <div class="img_div">
-            <img class="attraction_travel_info_img"
-                src="https://www.travel.taipei/d_upload_ttn/sceneadmin/image/A0/B0/C0/D7/E691/F391/db1eba17-f937-466a-a3be-f2ef35c88971.JPG"
-                alt="我是照片">
-        </div>
-        <div class="travel_booking_info_div">
-            <div class="booking_travel_title_div">
-                <span class="booking_item">台北一日遊:</span>
-                <span class="booking_value">平安鐘</span>
+    <div class="booking_item_div">
+        <!-- <div class="atrraction_travel_info_div">
+            <div class="img_div">
+                <img class="attraction_travel_info_img"
+                    src="https://www.travel.taipei/d_upload_ttn/sceneadmin/image/A0/B0/C0/D7/E691/F391/db1eba17-f937-466a-a3be-f2ef35c88971.JPG"
+                    alt="我是照片">
             </div>
-            <div class="booking_travel_date_div">
-                <span class="booking_item">日期：</span>
-                <span class="booking_value">2021-04-23</span>
+            <div class="travel_booking_info_div">
+                <div class="booking_travel_title_div">
+                    <span class="booking_item">台北一日遊:</span>
+                    <span class="booking_value">平安鐘</span>
+                </div>
+                <div class="booking_travel_date_div">
+                    <span class="booking_item">日期：</span>
+                    <span class="booking_value">2021-04-23</span>
+                </div>
+                <div class="booking_travel_time_div">
+                    <span class="booking_item">時間：</span>
+                    <span class="booking_value">早上 9 點到下午 4 點</span>
+                </div>
+                <div class="booking_travel_price_div">
+                    <span class="booking_item">費用：</span>
+                    <span class="booking_value">新台幣 2000 元</span>
+                </div>
+                <div class="booking_travel_address_div">
+                    <span class="booking_item">地點：</span>
+                    <span class="booking_value">臺北市 大安區忠孝東路4段</span>
+                </div>
+                <div class="booking_item_delete_div">
+                    <button class="booking_item_delete_button" id=1 onclick=delete_booking_item_and_reflush_page()></button> 
+                </div>
             </div>
-            <div class="booking_travel_time_div">
-                <span class="booking_item">時間：</span>
-                <span class="booking_value">早上 9 點到下午 4 點</span>
-            </div>
-            <div class="booking_travel_price_div">
-                <span class="booking_item">費用：</span>
-                <span class="booking_value">新台幣 2000 元</span>
-            </div>
-            <div class="booking_travel_address_div">
-                <span class="booking_item">地點：</span>
-                <span class="booking_value">臺北市 大安區忠孝東路4段</span>
-            </div>
-        </div>
+    
+        </div> -->
+    </div>
 
-    </div>
     <hr>
     <form action="javascript:void(0);" id="booking_form" class="booking_form">
         <div class="contact_div">
@@ -112,7 +118,7 @@
         <hr>
         <div class="confirm">
             <div class="confirm_div">
-                <span class="confirm_price_span">總價：新台幣 2000 元</span>
+                <span class="confirm_price_span"></span>
                 <p class="comfirm_submit_message" id="comfirm_submit_message"></p>
                 <button class="confirm_submit_button" onclick=booking_travel_submit()>確認訂購並付款</button>
             </div>

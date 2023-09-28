@@ -26,10 +26,20 @@ hr {
   justify-content: start;
 }
 
+.booking_item_div {
+  max-width: 840px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
 .atrraction_travel_info_div {
   max-width: 840px;
   width: 100%;
   display: flex;
+  border: 1px solid var(--Gray-300, #E8E8E8);
+  position: relative;
 }
 
 .img_div {
@@ -38,12 +48,13 @@ hr {
 }
 .img_div img {
   width: 266px;
-  height: 200px;
+  height: 100% !important;
   -o-object-fit: cover;
      object-fit: cover;
 }
 
 .travel_booking_info_div {
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -53,6 +64,19 @@ hr {
 }
 .travel_booking_info_div div {
   height: 24px;
+}
+.travel_booking_info_div .booking_item_delete_div {
+  width: 100%;
+  position: absolute;
+  display: flex;
+  inset: 0px 0px auto auto;
+  justify-content: flex-end;
+}
+.travel_booking_info_div .booking_item_delete_button {
+  width: 30px;
+  height: 30px;
+  background-image: url("../icon-delete.png");
+  background-color: white;
 }
 
 .booking_travel_title_div {
@@ -70,6 +94,13 @@ hr {
   font-size: 19px;
   font-style: normal;
   font-weight: 700;
+}
+
+.booking_message_status_p {
+  color: var(--secondary-color-gray-70, #666);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
 }
 
 .booking_item {
@@ -175,17 +206,17 @@ hr {
 }
 
 .confirm {
-  height: 100px;
+  display: flex;
+  justify-content: flex-end;
   width: 100%;
   max-width: 840px;
   position: relative;
+  margin-bottom: 62px;
 }
 .confirm .confirm_div {
-  position: absolute;
-  inset: 0px 0px auto auto;
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 25px;
   align-items: flex-end;
 }
 .confirm .confirm_submit_button {
@@ -204,4 +235,39 @@ hr {
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
+}
+
+@media (max-width: 860px) {
+  .content {
+    padding: 10px;
+  }
+}
+@media (max-width: 600px) {
+  .atrraction_travel_info_div {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .img_div {
+    padding: 28px 0px 28px 0px;
+    width: 100% !important;
+    height: 256px !important;
+  }
+  .img_div img {
+    width: 100%;
+    height: 100%;
+  }
+  .travel_booking_info_div {
+    min-width: calc(100% - 20px);
+    padding-left: 0px !important;
+  }
+  .booking_item_delete_div {
+    position: relative !important;
+    width: 100%;
+    height: 35px !important;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .booking_item_delete_div .booking_item_delete_button {
+    position: relative !important;
+  }
 }/*# sourceMappingURL=bookingStyle.css.map */
