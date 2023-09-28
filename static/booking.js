@@ -19,7 +19,7 @@ function clean_page(){
 
     content_div.innerHTML=`
         <div class="booking_message_div">
-            <p class="booking_message_p">您好，林文昱，待預定行程如下：</p>
+            <p class="booking_message_p">您好，林文昱，待預訂行程如下：</p>
         </div>
         <div class="booking_message_div">
             <p class="booking_message_status_p">目前沒有任何待預訂的行程</p>
@@ -125,7 +125,7 @@ async function check_user_login_status_flush_item() {
     }
 
     //客製化頁面
-    add_booking_message_p(`您好，${parseData["data"]["name"]}，待預定行程如下`)
+    add_booking_message_p(`您好，${parseData["data"]["name"]}，待預訂行程如下`)
 
     //拿到user預定行程資料
     get_booking_request_para = {
