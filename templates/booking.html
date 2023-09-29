@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/bookingStyle.css') }}">
+<div class="content">
+    <div class="booking_message_div">
+        <p class="booking_message_p">您好，林文昱，待預訂行程如下：</p>
+    </div>
+    <div class="booking_item_div">
+        <!-- <div class="atrraction_travel_info_div">
+            <div class="img_div">
+                <img class="attraction_travel_info_img"
+                    src="https://www.travel.taipei/d_upload_ttn/sceneadmin/image/A0/B0/C0/D7/E691/F391/db1eba17-f937-466a-a3be-f2ef35c88971.JPG"
+                    alt="我是照片">
+            </div>
+            <div class="travel_booking_info_div">
+                <div class="booking_travel_title_div">
+                    <span class="booking_item">台北一日遊:</span>
+                    <span class="booking_value">平安鐘</span>
+                </div>
+                <div class="booking_travel_date_div">
+                    <span class="booking_item">日期：</span>
+                    <span class="booking_value">2021-04-23</span>
+                </div>
+                <div class="booking_travel_time_div">
+                    <span class="booking_item">時間：</span>
+                    <span class="booking_value">早上 9 點到下午 4 點</span>
+                </div>
+                <div class="booking_travel_price_div">
+                    <span class="booking_item">費用：</span>
+                    <span class="booking_value">新台幣 2000 元</span>
+                </div>
+                <div class="booking_travel_address_div">
+                    <span class="booking_item">地點：</span>
+                    <span class="booking_value">臺北市 大安區忠孝東路4段</span>
+                </div>
+                <div class="booking_item_delete_div">
+                    <button class="booking_item_delete_button" id=1 onclick=delete_booking_item_and_reflush_page()></button> 
+                </div>
+            </div>
+    
+        </div> -->
+    </div>
+    <!-- <hr> -->
+    <!-- <form action="javascript:void(0);" id="booking_form" class="booking_form">
+        <div class="contact_div">
+            <div class="contact_div_div booking_div">
+                <p class="booking_contact_title">您的聯絡資訊</p>
+                <div class="booking_contact_name_div">
+                    <label class="label" for="name">聯絡姓名：</label>
+                    <input class="input" type="text" id="name" placeholder="請輸入姓名" required>
+                </div>
+                <div class="booking_contact_email_div">
+                    <label class="label" for="email">連絡信箱：</label>
+                    <input class="input" type="email" id="email" placeholder="請輸入電子信箱" required>
+                </div>
+                <div class="booking_contact_phone_div">
+                    <label class="label" for="phone">手機號碼：</label>
+                    <input class="input" type="text" id="phone" placeholder="請輸入手機號碼" required>
+                </div>
+                <p class="booking_contact_footer">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</p>
+            </div>
+        </div>
+        <hr>
+        <div class="payment_div">
+            <div class="payment_div_div">
+                <p class="booking_payment_title">信用卡付款資訊</p>
+                <div class="booking_payment_div">
+                    <label class="label" for="card_number">卡片號碼：</label>
+                    <input class="input" type="text" id="card_number" inputmode="numeric" minlength="12" maxlength="12"
+                        placeholder="**** **** **** ****">
+                </div>
+                <div class="booking_payment_exp_date_div">
+                    <label class="label" for="exp_date">過期時間：</label>
+                    <div class="input">
+                        <select name="multi_month" id="multi_month" class="select">
+                            <option value="">MM</option>
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        &nbsp;/&nbsp;
+                        <select name="multi_year" id="multi_year" class="select">
+                            <option value="">YY</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                            <option value="32">32</option>
+                            <option value="33">33</option>
+                            <option value="34">34</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="booking_payment_validation_number_div">
+                    <label class="label" for="validation_number">驗證密碼：</label>
+                    <input class="input" type="text" id="validation_number" placeholder="CVV" minlength="3"
+                        maxlength="3" inputmode="numeric" required>
+
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="confirm">
+            <div class="confirm_div">
+                <span class="confirm_price_span"></span>
+                <p class="comfirm_submit_message" id="comfirm_submit_message"></p>
+                <button class="confirm_submit_button" onclick=booking_travel_submit()>確認訂購並付款</button>
+            </div>
+        </div> 
+    </form>-->
+
+</div>
+
+
+{% endblock %}
+
+{% block script_file %}
+<script src="{{ url_for('static', filename='/booking.js') }}"></script>
+{% endblock %}

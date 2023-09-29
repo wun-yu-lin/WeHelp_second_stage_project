@@ -2,6 +2,7 @@ from flask import *
 import routes.attractions_bp as attractions_bp
 import routes.mrts_bp as mrts_bp
 import routes.user_bp as user_bp
+import routes.booking_bp as booking_bp
 import sys
 sys.path.insert(1, './')
 from werkzeug.exceptions import HTTPException
@@ -20,6 +21,8 @@ app.register_blueprint(attractions_bp.blueprints_v2)
 app.register_blueprint(mrts_bp.blueprints)
 #/api/user
 app.register_blueprint(user_bp.blueprints)
+#/api/booking
+app.register_blueprint(booking_bp.blueprints)
 
 
 app.config

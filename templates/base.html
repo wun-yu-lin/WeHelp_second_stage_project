@@ -65,7 +65,8 @@
         </div>
         <div class="header_div_div flex"> 
           <li class="header_div_div_li flex">
-            <button class="header_div_div_li_button" type="button">預定行程</button>
+            <button class="header_div_div_li_button" type="button" onclick=redirect_booking_and_check_signin()>預定行程</button>
+          </li>
           <li class="header_div_div_li flex non-display" id="header_div_div_li_sign">
             <button class="header_div_div_li_button" type="button" onclick=show_sign()>登入/註冊</button>
             </li>
@@ -80,7 +81,6 @@
     </header>
     {% block content %}
     {% endblock %}
-      
   </div>
     
   
