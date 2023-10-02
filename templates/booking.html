@@ -1,11 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
+
+<!-- setup SDK -->
+<script src="https://js.tappaysdk.com/sdk/tpdirect/v5.17.0"></script>
+
 <link rel="stylesheet" href="{{ url_for('static', filename='/css/bookingStyle.css') }}">
 <div class="content">
     <div class="booking_message_div">
         <p class="booking_message_p">您好，林文昱，待預訂行程如下：</p>
     </div>
     <div class="booking_item_div">
+
         <!-- <div class="atrraction_travel_info_div">
             <div class="img_div">
                 <img class="attraction_travel_info_img"
@@ -40,7 +45,6 @@
     
         </div> -->
     </div>
-    <!-- <hr> -->
     <!-- <form action="javascript:void(0);" id="booking_form" class="booking_form">
         <div class="contact_div">
             <div class="contact_div_div booking_div">
@@ -65,12 +69,14 @@
             <div class="payment_div_div">
                 <p class="booking_payment_title">信用卡付款資訊</p>
                 <div class="booking_payment_div">
+                    <div class="tpfield input" id="card-number"></div>
                     <label class="label" for="card_number">卡片號碼：</label>
                     <input class="input" type="text" id="card_number" inputmode="numeric" minlength="12" maxlength="12"
-                        placeholder="**** **** **** ****">
+                    placeholder="**** **** **** ****">
                 </div>
                 <div class="booking_payment_exp_date_div">
                     <label class="label" for="exp_date">過期時間：</label>
+                    <div class="tpfield input" id="card-expiration-date"></div>
                     <div class="input">
                         <select name="multi_month" id="multi_month" class="select">
                             <option value="">MM</option>
@@ -104,10 +110,11 @@
                             <option value="34">34</option>
                         </select>
                     </div>
-
+                    
                 </div>
                 <div class="booking_payment_validation_number_div">
                     <label class="label" for="validation_number">驗證密碼：</label>
+                    <div class="tpfield input" id="card-ccv"></div>
                     <input class="input" type="text" id="validation_number" placeholder="CVV" minlength="3"
                         maxlength="3" inputmode="numeric" required>
 
@@ -122,13 +129,18 @@
                 <button class="confirm_submit_button" onclick=booking_travel_submit()>確認訂購並付款</button>
             </div>
         </div> 
-    </form>-->
+    </form> -->
 
 </div>
+
+   
+
 
 
 {% endblock %}
 
 {% block script_file %}
 <script src="{{ url_for('static', filename='/booking.js') }}"></script>
+<script src="{{ url_for('static', filename='/order.js') }}"></script>
+<script src="{{ url_for('static', filename='/booking_init.js') }}"></script>
 {% endblock %}
