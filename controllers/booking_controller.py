@@ -97,7 +97,7 @@ def delete_booking() -> Response:
 
     user_id = auth_result["data"]["id"]
     
-    ##change booking order status 1 to 0 (cancel)
+    ##change booking order status 0 to 1 (cancel)
     for item in request_booking_id_arr:
         try:
             delete_results = booking_model.change_booking_order_status_to_cancel_and_check_user_id(booking_id=item, user_id=user_id)
