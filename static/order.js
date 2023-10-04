@@ -130,7 +130,7 @@ async function init_order(){
 
 
 
-function booking_travel_submit(){
+async function booking_travel_submit(){
     if (document.querySelector("#confirm_submit_button").checkValidity() == false) {
         controll_sign_message(message = "輸入錯誤格式，請重新輸入")
         return
@@ -145,16 +145,79 @@ function booking_travel_submit(){
     }
 
     //get prime
-    TPDirect.card.getPrime((result) => {
+    TPDirect.card.getPrime(async (result) => {
         if (result.status !== 0) {
             alert('get prime error: ' + result.msg)
             return
         }
         let prime = result.card.prime
-        console.log(prime)
+
+        let booking_id_arr = []
+        document.querySelectorAll(".booking_item_delete_button").forEach(item=>{
+            booking_id_arr.push(parseInt(item.id))
+        })
+        //prepare order data in form
+        let form_data_obj = {
+            "contact_name": document.getElementById("name").value,
+            "contact_email": document.getElementById("email").value,
+            "contact_phone": document.getElementById("phone").value,
+            "amount": document.getElementById("confirm_price_span").value,
+            "booking_id_arr": booking_id_arr,
+        }
+
+        //prepare attraction data arr of order
+        let trip_arr = []
+        document.querySelectorAll(".atrraction_travel_info_div").forEach(item=>{
+            trip_arr.push({
+                "attraction": {
+                    "id": item.children[1].children[5].children[0].id,
+                    "name": item.children[1].children[0].children[1].textContent,
+                    "address": item.children[1].children[4].children[1].textContent,
+                    "image": item.children[0].children[0].src
+                },
+                "date": item.children[1].children[1].children[1].textContent,
+                "time": item.children[1].children[2].children[1].textContent,
+            })
+        })
 
         // send prime to your server, to pay with Pay by Prime API .
         // Pay By Prime Docs: https://docs.tappaysdk.com/tutorial/zh/back.html#pay-by-prime-api
+
+        order_obj = {
+            "prime": prime,
+            "order": {
+                "price": form_data_obj['amount'],
+                "booking_id_arr": form_data_obj['booking_id_arr'],
+                "trip": trip_arr,
+                "contact": {
+                    "name": form_data_obj['contact_name'],
+                    "email": form_data_obj['contact_email'],
+                    "phone": form_data_obj['contact_phone'],
+                },
+            }
+        }
+
+        request_para = {
+            method: 'POST',
+            headers:{
+                "Content-Type": 'application/json',
+                "Authorization": 'Bearer ' + localStorage.getItem('jwt_token')
+            },
+            body: JSON.stringify(order_obj),
+        }
+
+
+        let response =  await fetch(window.location.origin + '/api/orders', request_para)
+        let response_data = await response.json()
+
+        if (response_data['error'] == true) {
+            alert("交易失敗! 請重新下訂")
+            return
+        }else{
+            window.location.href = window.location.origin + '/thankyou?number=' + response_data['data']['number']
+        }
+        
+
     })
 
    

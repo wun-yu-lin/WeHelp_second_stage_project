@@ -241,7 +241,8 @@ function calculated_total_price(){
 
 function update_total_price_message(total_price){
     let total_price_parse = parseInt(total_price)
-    document.querySelector(".confirm_price_span").innerText = `總價：新台幣 ${total_price_parse} 元`
+    document.getElementById("confirm_price_span").innerText = `總價：新台幣 ${total_price_parse} 元`
+    document.getElementById("confirm_price_span").value = total_price_parse
 }
 
 function add_contact_and_payment_form(){
@@ -294,10 +295,10 @@ function add_contact_and_payment_form(){
         <hr>
         <div class="confirm">
             <div class="confirm_div">
-                <span class="confirm_price_span"></span>
+                <span class="confirm_price_span" id="confirm_price_span"></span>
                 <p class="comfirm_submit_message" id="comfirm_submit_message"></p>
                 <button class="confirm_submit_button" onclick=booking_travel_submit() id=confirm_submit_button>確認訂購並付款</button>
-            </div>
+            </div> 
         </div>
     `
     content_div.appendChild(booking_form)

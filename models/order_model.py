@@ -57,7 +57,7 @@ def save_unpayed_order_into_order_tabel_and_change_orderID_in_booking_table(user
         "prime": "前端從第三方金流 TapPay 取得的交易碼",
         "order": {
             "price": 2000, 
-            "booking_id": [1,2,3,4,5,6,7]
+            "booking_id_arr": [1,2,3,4,5,6,7]
             "trip": [
                 {
                 "attraction": {
@@ -79,7 +79,7 @@ def save_unpayed_order_into_order_tabel_and_change_orderID_in_booking_table(user
         }
     }
     '''
-    booking_id_arr = order_object["order"]["booking_id"]
+    booking_id_arr = order_object["order"]["booking_id_arr"]
     mysql_connection = get_mysql_connection_from_pool(mysql_connection_pool)
     cursor = mysql_connection.cursor(dictionary=True)
 
@@ -98,18 +98,13 @@ def save_unpayed_order_into_order_tabel_and_change_orderID_in_booking_table(user
                                 str(order_object["order"]["contact"]["phone"]),
                                 int(user_id), 
                                 ))
-        order_id=cursor.lastrowid
-        print("order_id",order_id)
-        results = order_id
+        order_results=cursor.lastrowid
         for booking_id in booking_id_arr:
             cursor.execute(booking_mysql_str, (
-                                int(order_id),
+                                int(order_results),
                                 int(booking_id),
                                 int(user_id), 
                                 ))
-            print("booking_id",booking_id)
-            print("ord_id",order_id)
-            print("user_id",user_id)
 
 
         ##finish transaction and commit
@@ -119,17 +114,17 @@ def save_unpayed_order_into_order_tabel_and_change_orderID_in_booking_table(user
  
     except Exception as err:
         print(err)
-        results = errorhandling.handle_error({"code": HTTPStatus.INTERNAL_SERVER_ERROR, "message": "MySQL Server error"})
+        order_results = errorhandling.handle_error({"code": HTTPStatus.INTERNAL_SERVER_ERROR, "message": "MySQL Server error"})
         mysql_connection.rollback()
 
     finally:
         cursor.close()
         mysql_connection.close()
 
-    return results
+    return order_results
 
 
-def update_order_status_and_number(user_id:int,order_id:int,status_code:int,number:str)-> str:
+def update_order_status_and_number(user_id:int,order_id:int,status_code:int,number:str)-> int:
     '''
     This function is used to update order status and number,
     if success return updated order id 
@@ -143,19 +138,23 @@ def update_order_status_and_number(user_id:int,order_id:int,status_code:int,numb
     mysql_connection = get_mysql_connection_from_pool(mysql_connection_pool)
     cursor = mysql_connection.cursor(dictionary=True)
 
-    mysql_str = "UPDATE taipei_travel.order SET status = %s where id = %s and user_id = %s;"
+    mysql_str = "UPDATE taipei_travel.order SET status = %s, number = %s where id = %s and user_id = %s;"
  
     try:
-        
+
         cursor.execute(mysql_str, (
                                 int(status_code),
+                                str(number),
                                 int(order_id),
                                 int(user_id), 
                                 ))
-        results=cursor.lastrowid
+        if cursor.rowcount > 0:
+            results = 0
+            print("update order success!")
+        else:
+            print("update order fail!")
+            results = 1
         mysql_connection.commit()
-        
-        print("update order success!")
 
  
     except Exception as err:
@@ -167,3 +166,31 @@ def update_order_status_and_number(user_id:int,order_id:int,status_code:int,numb
         mysql_connection.close()
 
     return results
+
+
+def get_order_info_by_order_number(user_id:int, order_number:str)->dict:
+    
+    mysql_connection = get_mysql_connection_from_pool(mysql_connection_pool)
+    cursor = mysql_connection.cursor(dictionary=True)
+
+    mysql_str = "Select distinct o.id, o.number, o.order_price, o.contact_name, o.contact_email, o.contact_phone, o.status ,b.id  as booking_id,b.attraction_id, b.date, b.time, a.address, a.name as attraction_name, group_concat(distinct i.src separator ',') as image_src, o.user_id from taipei_travel.order o left join taipei_travel.booking b on o.id = b.order_id left join taipei_travel.attraction a on b.attraction_id = a.id left join taipei_travel.image i on a.id = i.attraction_id where o.number = %s and o.user_id = %s group by o.id, b.id;"
+    try:
+        cursor.execute(mysql_str, (
+                                str(order_number),
+                                int(user_id),
+                                ))
+        results = cursor.fetchall()
+        mysql_connection.commit()
+
+ 
+    except Exception as err:
+        print(err)
+        results = errorhandling.handle_error({"code": HTTPStatus.INTERNAL_SERVER_ERROR, "message": "MySQL Server error"})
+
+    finally:
+        cursor.close()
+        mysql_connection.close()
+
+
+    return results
+

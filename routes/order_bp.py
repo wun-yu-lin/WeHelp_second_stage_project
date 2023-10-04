@@ -21,4 +21,4 @@ blueprints_order.before_request(order_before_auth)
 
 
 blueprints_orders.route("/", methods=["POST"])(post_orders) ####建立新的訂單，並完成付程序
-blueprints_order.route("/<int:order_number>", methods=["GET"])(get_order_by_order_number) ##根據訂單編號取得訂單資訊
+blueprints_order.route("/", methods=["GET"])(get_order_by_order_number) ##根據訂單編號取得訂單資訊

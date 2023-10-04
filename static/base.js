@@ -60,7 +60,7 @@ async function check_user_login_status_control_element() {
 
 async function login_account() {
     //check form input
-    if (document.querySelector("#confirm_submit_button").checkValidity() == false) {
+    if (document.querySelector("#signin_form").checkValidity() == false) {
         controll_sign_message(message = "輸入錯誤格式，請重新登入")
         return
     }

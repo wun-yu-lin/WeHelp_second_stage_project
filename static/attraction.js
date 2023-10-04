@@ -177,7 +177,6 @@ async function booking_select_plan() {
     let parseData = await fetch_data.json()
     console.log(parseData)
     if (parseData['ok']) {
-        alert("預定成功")
         window.location.href = window.location.origin+"/booking"
     }
     else {

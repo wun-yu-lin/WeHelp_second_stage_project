@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/thankyouStyle.css') }}">
+<div class="content">
+    <div class="order_div" id="order_div">
+        <div class="title">
+            <span class="thank_you_content_span" id="thank_you_content_span">感謝您訂購此行程，您的訂購內容如下：</span>
+        </div>
+        <div class="order_number_div">
+            <span class="order_number_span" id="order_price_item_span">訂單編號：NA</span>
+        </div>
+        <div class="order_status_div">
+            <div>
+                <span class="order_price_item_span">費用：</span>
+                <span class="order_price_value_span" id="order_price_value_span">新台幣 NA 元</span>
+            </div>
+            <div>
+                <span class="order_status_item_span">訂單狀態：</span>
+                <span class="order_status_value_span" id="order_status_value_span">NA</span>
+
+            </div>
+        </div>
+        <div class="order_contact_div">
+            <span class="order_contact_name_span" id="order_contact_name_span">聯絡姓名：NA</span>
+            <span class="order_contact_email_span" id="order_contact_email_span">聯絡信箱：NA</span>
+            <span class="order_contact_phone_span" id="order_contact_phone_span">聯絡電話：NA</span>
+        </div>
+
+    </div>
+      
+
+</div>
+
+   
+
+
+
+{% endblock %}
+
+{% block script_file %}
+<script src="{{ url_for('static', filename='/thankyou.js') }}"></script>
+
+{% endblock %}
