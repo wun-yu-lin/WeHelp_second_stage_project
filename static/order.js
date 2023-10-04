@@ -131,8 +131,10 @@ async function init_order(){
 
 
 async function booking_travel_submit(){
+    document.querySelector("#confirm_submit_button").disabled = true
     if (document.querySelector("#confirm_submit_button").checkValidity() == false) {
         controll_sign_message(message = "輸入錯誤格式，請重新輸入")
+        document.querySelector("#confirm_submit_button").disabled = false
         return
     }
     // 取得 TapPay Fields 的 status
@@ -141,6 +143,7 @@ async function booking_travel_submit(){
     // 確認是否可以 getPrime, 如果不行就 show error
     if (tappayStatus.canGetPrime === false) {
         alert('信用卡資料認證錯誤')
+        document.querySelector("#confirm_submit_button").disabled = false
         return
     }
 
@@ -209,10 +212,9 @@ async function booking_travel_submit(){
 
         let response =  await fetch(window.location.origin + '/api/orders', request_para)
         let response_data = await response.json()
-
+        document.querySelector("#confirm_submit_button").disabled = false
         if (response_data['error'] == true) {
             alert("交易失敗! 請重新下訂")
-            return
         }else{
             window.location.href = window.location.origin + '/thankyou?number=' + response_data['data']['number']
         }
