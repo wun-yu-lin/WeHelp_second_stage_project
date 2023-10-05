@@ -1,0 +1,64 @@
+/* 基本樣式設定 */
+.content {
+    padding: 20px;
+    width: calc(100% - 20px);
+    max-width: 800px;
+    min-width: 340px;
+    margin-top: 90px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.order_div {
+    margin-top: 20px;
+}
+
+.title {
+    text-align: center;
+    padding: 10px 0;
+    font-size: 24px;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
+}
+
+.order_number_div,
+.order_status_div,
+.order_contact_div,
+.order_attraction_item_div {
+    padding: 15px 0;
+}
+
+.order_status_div > div {
+    margin-bottom: 10px;
+}
+
+/* 一些額外的樣式設定 */
+.thank_you_content_span {
+    color: #333;
+}
+
+.order_number_span,
+.order_contact_name_span,
+.order_contact_email_span,
+.order_contact_phone_span,
+.order_attraction_name_span,
+.order_attraction_date_span,
+.order_attraction_time_span {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.order_price_item_span,
+.order_status_item_span,
+.order_price_value_span,
+.order_status_value_span {
+    margin-right: 10px;
+    color: #666;
+}
+
+.order_price_value_span,
+.order_status_value_span {
+    font-weight: bold;
+}

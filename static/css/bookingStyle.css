@@ -170,6 +170,13 @@ hr {
   border-radius: 5px;
 }
 
+.tpfield {
+  height: 38px;
+  width: 180px;
+  margin: 5px 0;
+  padding: 10px;
+}
+
 .select {
   color: var(--secondary-color-gray-70, #666);
   -webkit-appearance: none;
@@ -197,6 +204,11 @@ hr {
   display: flex;
   flex-direction: column;
   gap: 15px;
+}
+.payment_div .payment_div_div div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 .payment_div .booking_payment_title {
   color: var(--secondary-color-gray-70, #666);

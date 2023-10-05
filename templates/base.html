@@ -23,7 +23,7 @@
         <input class="sign_input" id="user_account_singup" type="email" placeholder="輸入電子信箱" maxlength="255" minlength="8">
 
         <input id="user_password_signup" type="password" placeholder="輸入密碼" maxlength="255" minlength="8">
-        <button class="sign_button" onclick=signup_account()>註冊新帳戶</button>
+        <button class="sign_button" id="signup_button" onclick=signup_account()>註冊新帳戶</button>
       </form>
 
       <p class="sign_message" id="sign_message"></p>
@@ -44,7 +44,7 @@
           <input class="sign_input" id="user_account_signin" type="email" placeholder="輸入電子信箱" maxlength="255" minlength="8">
       
           <input id="user_password_signin" type="password" placeholder="輸入密碼" maxlength="255" minlength="8">
-          <button class="sign_button" onclick=login_account()>登入帳戶</button>
+          <button class="sign_button" id="login_button" onclick=login_account()>登入帳戶</button>
         </form>
 
         <p class="sign_message" id="sign_message"></p>

@@ -1,6 +1,7 @@
 let date = new Date().getDate();
 let current = (new Date().getFullYear()) + "-" + (new Date().getMonth()) + "-" + (new Date().getDate()) ;
 console.log(current)
+document.getElementsByClassName("travel_plan_select_button")[0].disabled = false
 
 
 // new AirDatepicker('#myDatepicker');
@@ -135,6 +136,12 @@ function switch_attraction_info_img_dot(switch_index) {
 
 
 async function booking_select_plan() {
+
+    document.querySelector(".travel_plan_select_button").disabled = true;
+
+
+    
+    
     //check login
     let jwt_token = localStorage.getItem("jwt_token")
     if (jwt_token == null) {
@@ -177,12 +184,12 @@ async function booking_select_plan() {
     let parseData = await fetch_data.json()
     console.log(parseData)
     if (parseData['ok']) {
-        alert("預定成功")
         window.location.href = window.location.origin+"/booking"
     }
     else {
         alert("預定失敗")
     }
+    document.querySelector(".travel_plan_select_button").disabled = false
 
 }
 

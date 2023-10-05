@@ -67,10 +67,10 @@ def post_user():
 ##取得會員資料 需要ＪＷＴ認證
 def get_user_auth():
     request_bearer_token = request.authorization.token
+    
     if request_bearer_token == None: return jsonify(None), HTTPStatus.FORBIDDEN
     auth_result = auth_signin_status(jwyt_token=request_bearer_token)
-    if auth_result["data"] == None:
-        return jsonify(None), HTTPStatus.FORBIDDEN
+    if auth_result["data"] == None: return jsonify(None), HTTPStatus.FORBIDDEN
     
     return jsonify(auth_result), HTTPStatus.OK
     
@@ -81,6 +81,7 @@ def put_user_auth():
     except Exception as err:
         print(err)
         return errorhandling.handle_error({"code": HTTPStatus.BAD_REQUEST, "message": "Invalid request body"})
+    
     if request.headers["content-type"]!="application/json": return errorhandling.handle_error({"code": HTTPStatus.BAD_REQUEST, "message": "Invalid request content type"})
 
     ##hash password

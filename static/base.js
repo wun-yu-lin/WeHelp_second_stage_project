@@ -64,6 +64,7 @@ async function login_account() {
         controll_sign_message(message = "輸入錯誤格式，請重新登入")
         return
     }
+    document.querySelector("#login_button").disabled = true
 
 
 
@@ -102,6 +103,8 @@ async function login_account() {
         //     window.location.reload()
         // }, 1000)
     }
+
+    document.querySelector("#login_button").disabled = false
 
     //login sucessfully save token
     if (parseData["error"] != true) {

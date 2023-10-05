@@ -4,6 +4,7 @@ hr {
     width: 100%;
 }
 
+
 .content{
     position: relative;
     margin-top: calc(54px + 40px);
@@ -168,7 +169,12 @@ hr {
     padding: 10px;
     border: 1px solid var(--Gray-300, #E8E8E8);
     border-radius: 5px;
-    
+}
+.tpfield {
+    height: 38px;
+    width: 180px;
+    margin: 5px 0;
+    padding: 10px;
 }
 
 .select {
@@ -191,13 +197,18 @@ hr {
 
 }
 
+
 .payment_div {
     width: 100%;
     .payment_div_div{ 
-        display: flex;
+        display: flex;  
         flex-direction: column;
         gap:15px;
-        
+        div{
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
     }
     .booking_payment_title {
         color: var(--secondary-color-gray-70, #666);
