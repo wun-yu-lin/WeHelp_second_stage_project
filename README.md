@@ -15,7 +15,7 @@ An e-commerce travel website for exploring tourist attractions in Taipei and fac
 - Backend
     - Framework: Flask + python
     - Database: MySQL
-    - Session: JWT token
+    - Authentication: JWT token
     - Third-party payment: TapPay
 
 ## Project architecture
