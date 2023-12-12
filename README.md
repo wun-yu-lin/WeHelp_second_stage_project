@@ -2,7 +2,7 @@
 
 An e-commerce travel website for exploring tourist attractions in Taipei and facilitating the booking of sightseeing trips.
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/3bbb6125-1f4c-4a9e-8239-419e9cd63397/c9d47978-2ab1-446f-b4b0-672fc56ba21c/Untitled.png)
+![demoPicture](https://github.com/wun-yu-lin/taipei-day-trip/blob/main/demo/demo.png?raw=true)
 
 ## Technique Overview
 
@@ -20,17 +20,20 @@ An e-commerce travel website for exploring tourist attractions in Taipei and fac
 
 ## Project architecture
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/3bbb6125-1f4c-4a9e-8239-419e9cd63397/53f8ca64-b872-48d0-8b12-7792e184efde/Untitled.png)
+![Architecture](https://github.com/wun-yu-lin/taipei-day-trip/blob/main/demo/architecture.png?raw=true)
 
 ## Highlights
 
 - Search for attractions by keywords or MRT name.
-    
+    ![1](https://github.com/wun-yu-lin/taipei-day-trip/blob/main/demo/Search%20for%20attractionsbyKeywordsorMRTname..gif?raw=true)
     
 - Scroll bar of MRT list.
+    ![2](https://github.com/wun-yu-lin/taipei-day-trip/blob/main/demo/ScrollBarOfMRTlist.gif?raw=true)
     
     
 - Booking trip.
+    ![3](https://github.com/wun-yu-lin/taipei-day-trip/blob/main/demo/Bookingtrip..gif?raw=true)
     
     
 - Credit-card payment by TapPay and order page.
+    ![4](https://github.com/wun-yu-lin/taipei-day-trip/blob/main/demo/Credit-cardPaymentByTapPay.gif?raw=true)
